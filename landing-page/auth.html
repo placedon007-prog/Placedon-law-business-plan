@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — Placedon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("fonts/PlayfairDisplay-Variable.ttf") format("truetype");
+    font-weight: 400 900;
+    font-style: normal;
+  }
+
+  :root {
+    --ink:       #0A0A0A;
+    --parchment: #F5F3EF;
+    --slate:     #475569;
+    --caution:   #8B4513;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+
+  body {
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--ink);
+    color: var(--parchment);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────── */
+  nav {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 0 48px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .logo {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--parchment);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .back-link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    text-decoration: none;
+    transition: color 120ms;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.55); }
+
+  /* ─── MAIN ────────────────────────────────────────────── */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 80px 24px 100px;
+  }
+
+  .auth-box {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* ─── TABS ────────────────────────────────────────────── */
+  .auth-tabs {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    padding: 0 0 14px;
+    border-bottom: 1px solid transparent;
+    margin-bottom: -1px;
+    transition: color 120ms, border-color 120ms;
+  }
+  .tab-btn.active {
+    color: var(--parchment);
+    border-bottom-color: var(--parchment);
+  }
+  .tab-btn:hover:not(.active) { color: rgba(255,255,255,0.55); }
+
+  /* ─── HEADING ─────────────────────────────────────────── */
+  .auth-heading {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--parchment);
+    margin-bottom: 40px;
+    transition: opacity 150ms;
+  }
+
+  /* ─── FORMS ───────────────────────────────────────────── */
+  .auth-form { display: none; flex-direction: column; }
+  .auth-form.active { display: flex; }
+
+  .field { margin-bottom: 36px; }
+
+  .field label {
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 10px;
+  }
+
+  .input-wrap { position: relative; }
+
+  .field input,
+  .field select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 0;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 300;
+    color: var(--parchment);
+    outline: none;
+    transition: border-color 150ms ease;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+  .field input:focus,
+  .field select:focus { border-bottom-color: rgba(255,255,255,0.45); }
+  .field input::placeholder { color: rgba(255,255,255,0.16); }
+
+  /* password toggle */
+  .pw-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    padding: 4px 0;
+    transition: color 120ms;
+  }
+  .pw-toggle:hover { color: rgba(255,255,255,0.5); }
+
+  /* select arrow */
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '↓';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    pointer-events: none;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .field select option { background: #1a1a1a; color: var(--parchment); }
+
+  /* ─── ERROR ───────────────────────────────────────────── */
+  .error-msg {
+    display: none;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--caution);
+    margin-bottom: 28px;
+    line-height: 1.6;
+    padding: 12px 0;
+    border-top: 1px solid rgba(139,69,19,0.25);
+  }
+  .error-msg.visible { display: block; }
+
+  /* ─── SUBMIT ──────────────────────────────────────────── */
+  .submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 8px;
+  }
+
+  .submit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--parchment);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 3px;
+    transition: border-color 150ms ease;
+  }
+  .submit-btn:hover { border-color: var(--parchment); }
+  .submit-btn .arr { font-style: normal; font-size: 13px; color: rgba(255,255,255,0.3); }
+
+  .alt-action {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 120ms;
+  }
+  .alt-action:hover { color: rgba(255,255,255,0.5); }
+
+  /* ─── DIVIDER ─────────────────────────────────────────── */
+  .form-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+    margin: 0 0 36px;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 28px 48px;
+    flex-shrink: 0;
+  }
+  .foot-note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.12);
+  }
+
+  @media (max-width: 600px) {
+    nav    { padding: 0 24px; }
+    footer { padding: 24px; }
+    .auth-heading { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Placedon</a>
+  <a href="index.html" class="back-link">← Back</a>
+</nav>
+
+<main>
+  <div class="auth-box">
+
+    <!-- tabs -->
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-mode="signin">Sign in</button>
+      <button class="tab-btn"        data-mode="signup">Create account</button>
+    </div>
+
+    <!-- dynamic heading -->
+    <h1 class="auth-heading" id="authHeading">Sign in.</h1>
+
+    <!-- ── SIGN IN FORM ──────────────────────────────────── -->
+    <form id="signinForm" class="auth-form active"
+          action="http://localhost:8765/login" method="POST">
+
+      <div class="error-msg" id="signinError"></div>
+
+      <div class="field">
+        <label for="si-email">Email address</label>
+        <input type="email" id="si-email" name="email"
+               placeholder="you@firm.in" required autocomplete="email" />
+      </div>
+
+      <div class="field">
+        <label for="si-password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="si-password" name="password"
+                 placeholder="············" required autocomplete="current-password" />
+          <button type="button" class="pw-toggle" data-target="si-password">Show</button>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">
+          Sign in <span class="arr">↗</span>
+        </button>
+        <button type="button" class="alt-action" data-mode="signup">
+          No account? Create one
+        </button>
+      </div>
+    </form>
+
+    <!-- ── SIGN UP FORM ──────────────────────────────────── -->
+    <form id="signupForm" class="auth-form"
+          action="http://localhost:8765/register" method="POST">
+
+      <div class="error-msg" id="signupError"></div>
+
+      <div class="field">
+        <label for="su-name">Full name</label>
+        <input type="text" id="su-name" name="name"
+               placeholder="Vikram Nair" required autocomplete="name" />
+      </div>
+
+      <div class="field">
+        <label for="su-email">Email address</label>
+        <input type="email" id="su-email" name="email"
+               placeholder="vikram@csfirm.in" required autocomplete="email" />
+      </div>
+
+      <div class="field">
+        <label for="su-password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="su-password" name="password"
+                 placeholder="············" required autocomplete="new-password"
+                 minlength="8" />
+          <button type="button" class="pw-toggle" data-target="su-password">Show</button>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="field">
+        <label for="su-role">What do you do?</label>
+        <div class="select-wrap">
+          <select id="su-role" name="role" required>
+            <option value="" disabled selected>Select your role</option>
+            <option value="Practising Company Secretary">Practising Company Secretary</option>
+            <option value="Chartered Accountant (CA)">Chartered Accountant (CA)</option>
+            <option value="Founder / Director">Founder / Director</option>
+            <option value="Finance or Compliance Professional">Finance or Compliance Professional</option>
+            <option value="Legal Professional">Legal Professional</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">
+          Create account <span class="arr">↗</span>
+        </button>
+        <button type="button" class="alt-action" data-mode="signin">
+          Already have an account?
+        </button>
+      </div>
+    </form>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-note">© 2026 Placedon &nbsp;·&nbsp; Not legal advice.</div>
+</footer>
+
+<script>
+  const headings = { signin: 'Sign in.', signup: 'Create account.' };
+  const forms    = { signin: document.getElementById('signinForm'),
+                     signup: document.getElementById('signupForm') };
+  const heading  = document.getElementById('authHeading');
+
+  function setMode(mode) {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
+    forms.signin.classList.toggle('active', mode === 'signin');
+    forms.signup.classList.toggle('active', mode === 'signup');
+    heading.textContent = headings[mode];
+    history.replaceState(null, '', `?mode=${mode}`);
+  }
+
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode));
+  });
+
+  // Inline alt-action links
+  document.querySelectorAll('.alt-action[data-mode]').forEach(btn => {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode));
+  });
+
+  // Password show/hide
+  document.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inp = document.getElementById(btn.dataset.target);
+      const show = inp.type === 'password';
+      inp.type = show ? 'text' : 'password';
+      btn.textContent = show ? 'Hide' : 'Show';
+    });
+  });
+
+  // Read URL params on load
+  (function init() {
+    const params = new URLSearchParams(window.location.search);
+    const mode   = params.get('mode') || 'signin';
+    setMode(mode);
+
+    const error = params.get('error');
+    if (!error) return;
+
+    const messages = {
+      invalid_credentials: 'Email or password is incorrect.',
+      email_exists:        'An account with this email already exists. Sign in instead.',
+      missing_fields:      'Please fill in all required fields.',
+      weak_password:       'Password must be at least 8 characters.',
+      server_error:        'Something went wrong. Please try again.',
+    };
+
+    const msg = messages[error] || 'An error occurred.';
+    const el  = mode === 'signup'
+      ? document.getElementById('signupError')
+      : document.getElementById('signinError');
+    el.textContent = msg;
+    el.classList.add('visible');
+  })();
+</script>
+</body>
+</html>

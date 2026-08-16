@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Placedon — Statutory compliance, verified</title>
+<title>Placedon — The law doesn't need an opinion. It needs a citation.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
   @font-face {
     font-family: "Playfair Display";
@@ -12,102 +15,197 @@
     font-style: normal;
   }
 
+  /* ─── TOKENS ─────────────────────────────────────────── */
   :root {
-    --ink: #0A0A0A;
+    --ink:       #0A0A0A;
     --parchment: #F5F3EF;
-    --white: #FFFFFF;
-    --slate: #475569;
-    --slate-80: #334155;
-    --slate-20: #E2E8F0;
-    --ink-80: #4A4A4A;
-    --ink-40: #B5B5B5;
-    --ink-10: #E8E6E2;
+    --slate:     #475569;
+    --slate-80:  #334155;
+    --white:     #FFFFFF;
+    --ink-80:    #4A4A4A;
+    --ink-60:    #6B6B66;
+    --ink-40:    #B5B5B5;
+    --ink-20:    #D4D2CE;
+    --ink-10:    #E8E6E2;
+    --ink-5:     #EFEDE9;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
+  /* ─── RESET ──────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
+  /* ─── BASE ───────────────────────────────────────────── */
   body {
     font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: var(--parchment);
     color: var(--ink);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-
-  h1, h2 {
-    font-family: "Playfair Display", serif;
+  h1, h2, h3 {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
-  /* ---------- NAV ---------- */
+  h1 { font-size: 64px; }
+  h2 { font-size: 40px; line-height: 1.2; letter-spacing: -0.01em; }
+  h3 { font-size: 22px; line-height: 1.3; letter-spacing: 0; }
+
+  mono {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.85em;
+    color: var(--slate);
+  }
+
+  /* ─── LAYOUT ─────────────────────────────────────────── */
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+  section { padding: 120px 0; }
+
+  /* ─── EYEBROW ────────────────────────────────────────── */
+  .eyebrow {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* dark-section variant */
+  .eyebrow-dark {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .eyebrow-dark::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* ─── BODY COPY ──────────────────────────────────────── */
+  .body-copy {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ink-80);
+    max-width: 560px;
+  }
+  .body-copy-dark {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(245,243,239,0.6);
+    max-width: 560px;
+  }
+
+  /* ─── NAV ────────────────────────────────────────────── */
   nav.topnav {
     background: var(--ink);
-    color: var(--parchment);
-    border-bottom: 1px solid rgba(71, 85, 105, 0.35);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     position: sticky;
     top: 0;
     z-index: 20;
   }
 
   nav.topnav .wrap {
-    height: 64px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
   }
 
-  .logo { font-family: "Playfair Display", serif; font-size: 19px; font-weight: 700; }
-
-  .nav-links { display: flex; gap: 28px; }
-  .nav-links a {
-    color: #C9C9C4;
+  .logo {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--parchment);
+    letter-spacing: -0.01em;
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .nav-links a {
+    color: var(--ink-40);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 120ms ease;
+    white-space: nowrap;
   }
   .nav-links a:hover { color: var(--parchment); }
 
-  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .nav-actions { display: flex; align-items: center; }
 
-  .link-btn {
+  .nav-login {
+    color: var(--ink-40);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 120ms;
+  }
+  .nav-login:hover { color: var(--parchment); }
+
+  .nav-signup {
     color: var(--parchment);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    padding: 8px 4px;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 6px 14px;
+    border-radius: 2px;
+    transition: border-color 120ms;
   }
+  .nav-signup:hover { border-color: rgba(255,255,255,0.5); }
 
-  .btn-outline {
-    border: 1px solid #5b6472;
+  .nav-cta {
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 14px;
     color: var(--parchment);
-    background: transparent;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 9px 16px;
-    border-radius: 4px;
     text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 1px;
+    transition: border-color 120ms ease;
   }
-  .btn-outline:hover { border-color: var(--parchment); }
+  .nav-cta:hover { border-color: var(--parchment); }
 
-  .btn-primary {
-    background: var(--slate);
-    color: var(--parchment);
-    border: none;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 10px 18px;
-    border-radius: 4px;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .btn-primary:hover { background: var(--slate-80); }
-
-  /* ---------- Hamburger (hidden on wide screens, replaces the menu — never
-     just deletes it — once it no longer fits inline) ---------- */
   .hamburger {
     display: none;
     background: none;
@@ -115,183 +213,489 @@
     cursor: pointer;
     padding: 8px;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+    margin-left: 16px;
   }
   .hamburger span {
-    width: 20px; height: 2px;
+    width: 20px;
+    height: 1px;
     background: var(--parchment);
     display: block;
+    transition: opacity 120ms;
   }
 
   .mobile-menu {
     display: none;
     flex-direction: column;
     background: var(--ink);
-    border-top: 1px solid rgba(71, 85, 105, 0.35);
-    padding: 8px 40px 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 8px 48px 28px;
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu a {
-    color: #C9C9C4;
+    color: var(--ink-40);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 600;
-    padding: 12px 0;
-    border-bottom: 1px solid #1c1c1c;
+    font-weight: 300;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
   }
-  .mobile-menu .mobile-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
+  .mobile-menu .mob-cta {
+    margin-top: 20px;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--parchment);
+    border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+    padding-bottom: 2px !important;
+    display: inline-block;
   }
 
-  /* ---------- HERO (black) ---------- */
+  /* ─── HERO ───────────────────────────────────────────── */
   section.hero {
     background: var(--ink);
     color: var(--parchment);
-    padding: 110px 0 130px;
-    position: relative;
+    padding: 140px 0 160px;
+  }
+
+  .hero h1 {
+    color: var(--parchment);
+    max-width: 700px;
+    margin-bottom: 28px;
+  }
+
+  .hero .lede {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(245,243,239,0.55);
+    max-width: 520px;
+    margin-bottom: 52px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: baseline;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+
+  .cta-primary {
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--parchment);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+    padding-bottom: 3px;
+    transition: border-color 150ms ease;
+  }
+  .cta-primary:hover { border-color: var(--parchment); }
+  .cta-primary .arr { font-style: normal; font-size: 14px; opacity: 0.5; }
+
+  .cta-ghost {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ink-40);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 120ms;
+  }
+  .cta-ghost:hover { color: var(--parchment); }
+
+  /* ─── PROBLEM ────────────────────────────────────────── */
+  section.problem { background: var(--parchment); }
+
+  section.problem h2 {
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+
+  .gap-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .gap-item {
+    border-top: 1px solid var(--ink-20);
+    padding: 28px 48px 28px 0;
+  }
+
+  .gap-item .g-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    margin-bottom: 16px;
+  }
+
+  .gap-item .g-head {
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+
+  .gap-item .g-body {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-60);
+  }
+
+  /* ─── MECHANISM ──────────────────────────────────────── */
+  section.mechanism {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+
+  section.mechanism h2 {
+    color: var(--parchment);
+    max-width: 520px;
+    margin-bottom: 16px;
+  }
+
+  section.mechanism .mech-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,243,239,0.5);
+    max-width: 520px;
+    margin-bottom: 64px;
+  }
+
+  .output-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 2px;
     overflow: hidden;
   }
 
-  .section-mark {
-    position: absolute;
-    top: -80px; right: -60px;
-    font-family: "Playfair Display", serif;
-    font-weight: 700;
-    font-size: 460px;
-    color: #141414;
-    z-index: 0;
-    pointer-events: none;
+  .output-card {
+    padding: 40px 44px;
   }
+  .output-card.applies  { background: #111111; }
+  .output-card.abstains { background: #0D0D0D; }
 
-  .hero .wrap { position: relative; z-index: 1; }
-
-  .eyebrow {
-    font-family: monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
+  .o-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--ink-40);
-    margin-bottom: 22px;
+    color: rgba(255,255,255,0.18);
+    margin-bottom: 28px;
   }
 
-  .hero h1 { font-size: 52px; line-height: 1.14; max-width: 680px; }
-
-  .hero .lede {
-    margin-top: 22px;
-    max-width: 520px;
-    font-size: 17px;
-    line-height: 1.6;
-    color: #C9C9C4;
-  }
-
-  .cta-row { margin-top: 36px; display: flex; align-items: center; gap: 16px; }
-
-  /* ---------- SECTION scaffolding ---------- */
-  section { padding: 90px 0; }
-  section.dark { background: var(--ink); color: var(--parchment); }
-  section.light { background: var(--parchment); color: var(--ink); }
-
-  .section-label {
-    font-family: monospace;
+  .o-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "JetBrains Mono", monospace;
     font-size: 11px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--ink-80);
+    margin-bottom: 28px;
+  }
+  .o-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .o-status.applies  { color: var(--parchment); }
+  .o-status.abstains { color: var(--ink-40); }
+
+  .o-citation {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--slate);
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+
+  .o-quote {
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(245,243,239,0.65);
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding-left: 18px;
+    margin-bottom: 28px;
+  }
+
+  .o-derivation {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    line-height: 2.1;
+    color: rgba(255,255,255,0.22);
+  }
+  .o-derivation span { color: rgba(245,243,239,0.7); }
+
+  .o-abstain-body {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ink-60);
+    margin-bottom: 32px;
+  }
+
+  .o-abstain-rules {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 24px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    line-height: 2.2;
+    color: rgba(255,255,255,0.15);
+  }
+
+  /* ─── COVERAGE ───────────────────────────────────────── */
+  section.coverage { background: var(--parchment); }
+
+  section.coverage h2 {
+    max-width: 560px;
     margin-bottom: 16px;
   }
-  section.dark .section-label { color: var(--ink-40); }
 
-  section h2 { font-size: 34px; line-height: 1.25; max-width: 620px; }
-
-  section .body-copy {
-    margin-top: 20px;
-    font-size: 15px;
-    line-height: 1.7;
-    max-width: 560px;
-    color: var(--ink-80);
+  .provision-index {
+    margin-top: 56px;
+    border-top: 1px solid var(--ink-20);
   }
-  section.dark .body-copy { color: #C9C9C4; }
 
-  /* ---------- Gap columns ---------- */
-  .gap-grid {
-    margin-top: 48px;
+  .provision-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+    grid-template-columns: 120px 1fr 200px;
+    gap: 0 32px;
+    border-bottom: 1px solid var(--ink-10);
+    padding: 16px 0;
+    align-items: baseline;
   }
-  .gap-item { border-top: 1px solid var(--ink-10); padding-top: 16px; }
-  .gap-item .num { font-family: "Playfair Display", serif; font-size: 24px; color: var(--slate-80); }
-  .gap-item .txt { margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--ink-80); }
 
-  /* ---------- Coverage cards ---------- */
-  .cover-grid {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+  .p-section {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--slate);
+    letter-spacing: 0.03em;
+    padding-top: 2px;
   }
-  .cover-card {
-    background: #111111;
-    border: 1px solid #262626;
-    border-left: 3px solid var(--slate);
-    border-radius: 4px;
-    padding: 28px;
+
+  .p-name {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.5;
   }
-  .cover-card .tag {
-    font-family: monospace;
-    font-size: 11px;
-    letter-spacing: 0.05em;
+
+  .p-form {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-40);
+    letter-spacing: 0.04em;
+    text-align: right;
+  }
+
+  .oos-block {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--ink-20);
+  }
+
+  .oos-block .oos-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--ink-40);
-    margin-bottom: 10px;
+    margin-bottom: 28px;
   }
-  .cover-card h3 {
-    font-family: "Playfair Display", serif;
-    font-size: 22px;
-    font-weight: 600;
+
+  .oos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  .oos-item {
+    border-bottom: 1px solid var(--ink-10);
+    padding: 16px 48px 16px 0;
+  }
+
+  .oos-name {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-40);
+    margin-bottom: 4px;
+  }
+
+  .oos-reason {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink-40);
+    line-height: 1.6;
+  }
+
+  /* ─── STANDARD ───────────────────────────────────────── */
+  section.standard {
+    background: var(--ink);
     color: var(--parchment);
   }
-  .cover-card p { margin-top: 10px; font-size: 13px; line-height: 1.6; color: #B8B8B3; }
 
-  /* ---------- Philosophy stats ---------- */
-  .proof-row { margin-top: 48px; display: flex; gap: 56px; flex-wrap: wrap; }
-  .proof-row .stat { border-top: 1px solid var(--ink-10); padding-top: 12px; min-width: 140px; }
-  .proof-row .stat .num { font-family: "Playfair Display", serif; font-size: 26px; color: var(--slate-80); }
-  .proof-row .stat .label { margin-top: 4px; font-size: 11px; color: var(--ink-80); line-height: 1.5; }
+  section.standard h2 {
+    color: var(--parchment);
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
 
-  /* ---------- Final CTA ---------- */
-  section.final-cta { text-align: left; }
-  section.final-cta h2 { max-width: 520px; }
-
-  .waitlist-form {
-    margin-top: 32px;
-    display: flex;
-    gap: 12px;
+  .pull-quote {
+    border-left: 1px solid rgba(255,255,255,0.15);
+    padding: 0 0 0 28px;
+    margin: 40px 0 56px;
+  }
+  .pull-quote p {
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--parchment);
     max-width: 460px;
   }
-  .waitlist-form input {
-    flex: 1;
-    background: #111111;
-    border: 1px solid #333333;
-    border-radius: 4px;
-    padding: 12px 14px;
+
+  .stat-row {
+    display: flex;
+    gap: 72px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 20px;
+    min-width: 140px;
+  }
+
+  .s-num {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    font-weight: 600;
     color: var(--parchment);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .s-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    line-height: 1.8;
+  }
+
+  /* ─── EARLY ACCESS ───────────────────────────────────── */
+  section.access { background: var(--parchment); }
+
+  section.access h2 {
+    max-width: 540px;
+    margin-bottom: 20px;
+  }
+
+  .access-tracks {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    max-width: 780px;
+  }
+
+  .track { }
+
+  .track-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ink-10);
+  }
+
+  .track-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-80);
+    margin-bottom: 28px;
+  }
+
+  .track-form input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--ink-20);
+    padding: 10px 0;
     font-size: 14px;
     font-family: inherit;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 150ms ease;
+    margin-bottom: 24px;
   }
-  .waitlist-form input::placeholder { color: #6b6b66; }
+  .track-form input:focus { border-bottom-color: var(--ink); }
+  .track-form input::placeholder { color: var(--ink-40); font-weight: 300; }
 
-  .cta-secondary-row { margin-top: 16px; font-size: 13px; color: var(--ink-40); }
-  .cta-secondary-row a { color: var(--parchment); text-decoration: underline; text-underline-offset: 3px; }
+  .track-submit {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-20);
+    padding-bottom: 2px;
+    transition: border-color 150ms ease;
+  }
+  .track-submit:hover { border-color: var(--ink); }
+  .track-submit .arr { font-style: normal; font-size: 12px; color: var(--ink-40); }
 
-  /* ---------- Footer ---------- */
+  .access-note {
+    margin-top: 56px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-40);
+    padding-top: 20px;
+    border-top: 1px solid var(--ink-10);
+    max-width: 780px;
+  }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
   footer {
     background: var(--parchment);
     border-top: 1px solid var(--ink-10);
     padding: 40px 0;
   }
+
   footer .wrap {
     display: flex;
     justify-content: space-between;
@@ -299,199 +703,382 @@
     flex-wrap: wrap;
     gap: 16px;
   }
-  footer .foot-links { display: flex; gap: 24px; }
-  footer .foot-links a { color: var(--ink-80); text-decoration: none; font-size: 13px; font-weight: 600; }
-  footer .foot-note { font-size: 12px; color: var(--ink-40); }
 
+  .foot-links {
+    display: flex;
+    gap: 28px;
+  }
+  .foot-links a {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink-40);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 120ms;
+  }
+  .foot-links a:hover { color: var(--ink); }
+
+  .foot-note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-40);
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────── */
   @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .hero h1 { font-size: 36px; }
-    .cover-grid, .gap-grid { grid-template-columns: 1fr; }
-    .waitlist-form { flex-direction: column; }
+    .nav-links   { display: none; }
+    .hamburger   { display: flex; }
+    .wrap        { padding: 0 24px; }
+    h1           { font-size: 40px; }
+    h2           { font-size: 30px; }
+    section      { padding: 80px 0; }
+    section.hero { padding: 100px 0 120px; }
+    .gap-grid    { grid-template-columns: 1fr; }
+    .output-grid { grid-template-columns: 1fr; }
+    .oos-grid    { grid-template-columns: 1fr; }
+    .access-tracks { grid-template-columns: 1fr; gap: 48px; }
+    .stat-row    { gap: 40px; }
+    .provision-row { grid-template-columns: 90px 1fr; }
+    .p-form      { display: none; }
+    .gap-item    { padding-right: 0; }
+    .oos-item    { padding-right: 0; }
+    .pull-quote p { font-size: 18px; }
+  }
+
+  @media (max-width: 600px) {
+    h1  { font-size: 32px; }
+    h2  { font-size: 26px; }
+    .hero .lede { font-size: 15px; }
   }
 </style>
 </head>
 <body>
 
-  <nav class="topnav">
-    <div class="wrap">
-      <div class="logo">Placedon</div>
-      <div class="nav-links">
-        <a href="#vision">Vision</a>
-        <a href="#coverage">What we cover</a>
-        <a href="#philosophy">How it works</a>
+<!-- ─── NAV ──────────────────────────────────────────────── -->
+<nav class="topnav">
+  <div class="wrap">
+    <a href="#" class="logo">Placedon</a>
+    <div class="nav-links">
+      <a href="#problem">Why it exists</a>
+      <a href="#mechanism">How it works</a>
+      <a href="#coverage">Coverage</a>
+    </div>
+    <div class="nav-actions">
+      <a href="http://localhost:8765/auth.html?mode=signin" class="nav-login">Log in</a>
+      <a href="http://localhost:8765/auth.html?mode=signup" class="nav-signup">Sign up</a>
+      <a href="waitlist.html" class="nav-cta">Join waitlist</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#problem">Why it exists</a>
+    <a href="#mechanism">How it works</a>
+    <a href="#coverage">Coverage</a>
+    <a href="waitlist.html" class="mob-cta">Join waitlist</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow-dark">Companies Act, 2013 &nbsp;·&nbsp; Private limited companies</div>
+    <h1>The law doesn't need<br>an opinion.<br>It needs a citation.</h1>
+    <p class="lede">
+      You sign the filing. The tool doesn't. Placedon is built around
+      that asymmetry — every answer traced to the exact provision,
+      and silence where certainty isn't available.
+    </p>
+    <div class="hero-actions">
+      <a href="waitlist.html" class="cta-primary">Join waitlist <span class="arr">↗</span></a>
+      <a href="#mechanism" class="cta-ghost">See how it works</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROBLEM ──────────────────────────────────────────── -->
+<section class="problem" id="problem">
+  <div class="wrap">
+    <div class="eyebrow">Why it exists</div>
+    <h2>The signing CS bears the risk.<br>The tools don't.</h2>
+    <p class="body-copy" style="margin-top: 20px;">
+      Statutory compliance in India is either slow and expensive — a retainer,
+      hours per question, a two-day wait for a two-minute answer — or fast and
+      dangerous, because generic AI sounds certain whether or not it has read
+      the provision. Neither option was designed for the person who certifies
+      the filing.
+    </p>
+    <div class="gap-grid">
+      <div class="gap-item">
+        <div class="g-label">01</div>
+        <div class="g-head">Slow</div>
+        <p class="g-body">A CS retainer or lawyer's hourly rate turns a
+        two-minute applicability question into a two-day wait — and the
+        question still has to go back when the Act changes.</p>
       </div>
-      <div class="nav-actions">
-        <a href="#" class="link-btn">Log in</a>
-        <a href="#" class="btn-outline">Sign up</a>
-        <a href="#waitlist" class="btn-primary">Join waitlist</a>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+      <div class="gap-item">
+        <div class="g-label">02</div>
+        <div class="g-head">Blind</div>
+        <p class="g-body">Filing software tracks deadlines it's been told
+        about. It doesn't tell you which thresholds apply as your company
+        grows, or which amendment changed them last.</p>
+      </div>
+      <div class="gap-item">
+        <div class="g-label">03</div>
+        <div class="g-head">Confident</div>
+        <p class="g-body">Generic AI answers with certainty whether or not
+        it has read the provision. A confident wrong answer has a specific
+        cost: your name on the adjudication order.</p>
       </div>
     </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#vision">Vision</a>
-      <a href="#coverage">What we cover</a>
-      <a href="#philosophy">How it works</a>
-      <div class="mobile-actions">
-        <a href="#" class="link-btn">Log in</a>
-        <a href="#" class="btn-outline">Sign up</a>
-      </div>
-    </div>
-  </nav>
+  </div>
+</section>
 
-  <section class="hero">
-    <div class="section-mark">§</div>
-    <div class="wrap">
-      <div class="eyebrow">Statutory compliance, verified</div>
-      <h1>The law doesn't need an opinion.<br>It needs a citation.</h1>
-      <p class="lede">
-        Placedon is building the compliance layer Indian companies don't have —
-        one that tells you exactly what the law requires, and admits, honestly,
-        when it doesn't know.
-      </p>
-      <div class="cta-row">
-        <a href="#waitlist" class="btn-primary">Join the waitlist</a>
-        <a href="#demo" class="btn-outline">Book a demo</a>
-      </div>
-    </div>
-  </section>
+<!-- ─── MECHANISM ────────────────────────────────────────── -->
+<section class="mechanism" id="mechanism">
+  <div class="wrap">
+    <div class="eyebrow-dark">How it works</div>
+    <h2>Two outputs.<br>No third option.</h2>
+    <p class="mech-sub">
+      A query enters. Either a citation exits — the section quoted verbatim,
+      the arithmetic shown, the status declared — or a refusal exits.
+      Placedon does not fill the gap with inference.
+    </p>
+    <div class="output-grid">
 
-  <section class="light" id="vision">
-    <div class="wrap">
-      <div class="section-label">Why we exist</div>
-      <h2>Every Indian company is one missed section away from a penalty it didn't see coming.</h2>
-      <p class="body-copy">
-        Statutory compliance in India is either slow and expensive — a Company
-        Secretary or Chartered Accountant retainer, hours per question — or fast
-        and dangerous, because generic AI answers questions it was never verified
-        against. Neither gives a founder or a compliance professional what they
-        actually need: a direct answer, traced to the exact provision, with an
-        honest admission when the answer isn't known.
-      </p>
-      <div class="gap-grid">
-        <div class="gap-item">
-          <div class="num">Slow</div>
-          <div class="txt">A CS retainer or a lawyer's hourly rate turns a two-minute
-          question into a two-day wait.</div>
+      <div class="output-card applies">
+        <div class="o-label">Output when a provision is found</div>
+        <div class="o-status applies">Applies</div>
+        <div class="o-citation">§ s.96(1) &nbsp;·&nbsp; Companies Act, 2013</div>
+        <div class="o-quote">
+          "Every company other than a One Person Company shall in each year
+          hold a general meeting as its annual general meeting in addition
+          to any other meetings held in that year…"
         </div>
-        <div class="gap-item">
-          <div class="num">Blind</div>
-          <div class="txt">Filing software tracks deadlines it's told about. It
-          doesn't tell you what applies to you as you grow.</div>
-        </div>
-        <div class="gap-item">
-          <div class="num">Confident</div>
-          <div class="txt">Generic AI sounds certain whether or not it's right —
-          and a confident wrong answer is worse than no answer.</div>
+        <div class="o-derivation">
+          ANCHOR &nbsp;&nbsp;&nbsp; <span>31 March 2026</span> &nbsp; close of financial year<br>
+          INTERVAL &nbsp; <span>"six months"</span> &nbsp;·&nbsp; verbatim, s.96(1)<br>
+          DEADLINE &nbsp; <span>30 September 2026</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="dark" id="coverage">
-    <div class="wrap">
-      <div class="section-label">What we cover</div>
-      <h2 style="color: var(--parchment)">Two statutes, chosen deliberately — not everything, on purpose.</h2>
-      <p class="body-copy">
-        Both are central, national statutes — one verification pass covers all
-        of India, not a patchwork of state rules. Both carry real, immediate
-        consequences for the companies that miss them.
-      </p>
-      <div class="cover-grid">
-        <div class="cover-card">
-          <div class="tag">Financial law</div>
-          <h3>Companies Act, 2013</h3>
-          <p>AGM timing, annual returns, financial statements, board meetings,
-          small-company and CSR thresholds — the statutory calendar every private
-          limited company runs on, computed from your own facts, not a generic template.</p>
-        </div>
-        <div class="cover-card">
-          <div class="tag">Digital law</div>
-          <h3>DPDP Act, 2023</h3>
-          <p>Data Fiduciary obligations, breach notification timing, and
-          Significant Data Fiduciary status. Phase II compliance obligations
-          become operational in November 2026 — this isn't a future problem.</p>
+      <div class="output-card abstains">
+        <div class="o-label">Output when no citation is available</div>
+        <div class="o-status abstains">Abstains</div>
+        <p class="o-abstain-body">
+          No verified provision found for this query within Placedon's
+          current corpus. The answer exists in statute. Placedon has not
+          verified it yet and will not answer from memory.
+        </p>
+        <div class="o-abstain-rules">
+          We do not answer from inference.<br>
+          We do not answer from general knowledge.<br>
+          We answer from citation, or we do not answer.
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="light" id="philosophy">
-    <div class="wrap">
-      <div class="section-label">How it works</div>
-      <h2>We don't guess.</h2>
-      <p class="body-copy">
-        If we can't point to the exact section behind an answer, we say so
-        instead of answering anyway. That refusal is the entire difference
-        between a tool that sounds confident and one that's actually
-        accountable — and it's the one thing about us that can't be faked.
-      </p>
-      <div class="proof-row">
-        <div class="stat">
-          <div class="num">2</div>
-          <div class="label">STATUTES COVERED<br>Companies Act · DPDP Act</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COVERAGE ─────────────────────────────────────────── -->
+<section class="coverage" id="coverage">
+  <div class="wrap">
+    <div class="eyebrow">What we cover</div>
+    <h2>One statute, completely —<br>not everything, on purpose.</h2>
+    <p class="body-copy" style="margin-top: 20px;">
+      Every provision listed below is covered completely, with the amending
+      instrument recorded where the Act was changed, or it is not listed
+      at all. The scope is narrow because the standard is not.
+    </p>
+
+    <div class="provision-index">
+
+      <div class="provision-row">
+        <div class="p-section">s.96</div>
+        <div class="p-name">Annual General Meeting — timing &amp; notice</div>
+        <div class="p-form">Phase 1</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.92</div>
+        <div class="p-name">Annual Return <mono>MGT-7</mono></div>
+        <div class="p-form">Phase 1</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.137</div>
+        <div class="p-name">Filing of Financial Statements <mono>AOC-4</mono></div>
+        <div class="p-form">Phase 1</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.134</div>
+        <div class="p-name">Board's Report — content &amp; signing requirements</div>
+        <div class="p-form">Phase 1</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.173</div>
+        <div class="p-name">Board Meeting — frequency &amp; quorum</div>
+        <div class="p-form">Phase 1</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.2(85)</div>
+        <div class="p-name">Small Company — threshold definition <mono>as amended 2020</mono></div>
+        <div class="p-form">Phase 1</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.2(62)</div>
+        <div class="p-name">One Person Company — definition &amp; obligations</div>
+        <div class="p-form">Phase 2</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.135</div>
+        <div class="p-name">CSR obligation trigger — net profit &amp; turnover thresholds</div>
+        <div class="p-form">Phase 2</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.203</div>
+        <div class="p-name">KMP appointment gates <mono>as amended 2019</mono></div>
+        <div class="p-form">Phase 2</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.90</div>
+        <div class="p-name">Significant Beneficial Owners — register &amp; disclosure</div>
+        <div class="p-form">Phase 2</div>
+      </div>
+
+      <div class="provision-row">
+        <div class="p-section">s.139</div>
+        <div class="p-name">Auditor — appointment &amp; rotation periods</div>
+        <div class="p-form">Phase 2</div>
+      </div>
+
+    </div>
+
+    <div class="oos-block">
+      <div class="oos-label">Not covered — and why</div>
+      <div class="oos-grid">
+
+        <div class="oos-item">
+          <div class="oos-name">DPDP Act, 2023</div>
+          <div class="oos-reason">Different buyer. Subordinate legislation still
+          landing. No enforcement history to cite.</div>
         </div>
-        <div class="stat">
-          <div class="num">0%</div>
-          <div class="label">CLAIMS SHIPPED UNVERIFIED<br>We abstain instead of guessing</div>
+
+        <div class="oos-item">
+          <div class="oos-name">GST / Income Tax</div>
+          <div class="oos-reason">Owned by incumbents with years of
+          enforcement data. Not enterable by a focused effort.</div>
         </div>
-        <div class="stat">
-          <div class="num">72hr</div>
-          <div class="label">DPDP BREACH WINDOW<br>Computed, not estimated</div>
+
+        <div class="oos-item">
+          <div class="oos-name">SEBI / Listed company obligations</div>
+          <div class="oos-reason">The buyer is not an SME. The market
+          is already served by well-funded compliance platforms.</div>
         </div>
+
+        <div class="oos-item">
+          <div class="oos-name">FEMA · PMLA · NBFC</div>
+          <div class="oos-reason">Unstable text, enterprise buyer,
+          specialist counsel required.</div>
+        </div>
+
       </div>
     </div>
-  </section>
 
-  <section class="dark final-cta" id="waitlist">
-    <div class="wrap">
-      <div class="section-label">Get in early</div>
-      <h2 style="color: var(--parchment)">Be first to see it.</h2>
-      <p class="body-copy">
-        Built for practising Company Secretaries and Chartered Accountants —
-        and for founders who'd rather know now than find out the hard way.
-      </p>
-      <form class="waitlist-form" id="demo">
-        <input type="email" placeholder="you@firm.com" required />
-        <button type="submit" class="btn-primary">Join waitlist</button>
-      </form>
-      <div class="cta-secondary-row">
-        Prefer to talk it through first? <a href="#">Book a 15-minute demo</a>.
+  </div>
+</section>
+
+<!-- ─── STANDARD ──────────────────────────────────────────── -->
+<section class="standard" id="standard">
+  <div class="wrap">
+    <div class="eyebrow-dark">The standard</div>
+    <h2>We don't guess.</h2>
+    <p class="body-copy-dark">
+      If we cannot point to the exact section behind an answer, we say so.
+      That refusal is the entire difference between a tool that sounds
+      confident and one that is actually accountable — and it is the one
+      thing about us that cannot be faked.
+    </p>
+    <div class="pull-quote">
+      <p>The scope is narrow because the standard is not.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="s-num">0</div>
+        <div class="s-label">Guesses in any answer<br>Citation or silence.</div>
+      </div>
+      <div class="stat-item">
+        <div class="s-num">0%</div>
+        <div class="s-label">Claims shipped unverified<br>Designed so that abstention<br>is the default.</div>
+      </div>
+      <div class="stat-item">
+        <div class="s-num">1,150+</div>
+        <div class="s-label">ROC adjudication orders<br>FY 2024–25 · Named sections<br>Named rupee amounts.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <div class="wrap">
-      <div class="logo">Placedon</div>
-      <div class="foot-links">
-        <a href="#vision">Vision</a>
-        <a href="#coverage">What we cover</a>
-        <a href="#">Log in</a>
-        <a href="#">Sign up</a>
-      </div>
-      <div class="foot-note">© 2026 Placedon. Not legal advice.</div>
+<!-- ─── EARLY ACCESS ──────────────────────────────────────── -->
+<section class="access" id="access">
+  <div class="wrap">
+    <div class="eyebrow">Get involved</div>
+    <h2>Ten conversations before<br>a single line of corpus.</h2>
+    <p class="body-copy" style="margin-top: 20px;">
+      We are speaking to practising Company Secretaries before we ingest
+      a single provision. The product is designed around your liability.
+      You should help design it.
+    </p>
+    <div style="margin-top: 52px;">
+      <a href="waitlist.html" class="cta-primary" style="font-size: 18px;">
+        Join waitlist <span class="arr">↗</span>
+      </a>
     </div>
-  </footer>
+    <div class="access-note">
+      Not legal advice. &nbsp;·&nbsp; Not a substitute for a practising CS or CA. &nbsp;·&nbsp; © 2026 Placedon.
+    </div>
+  </div>
+</section>
 
-  <script>
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <div class="logo" style="color: var(--ink);">Placedon</div>
+    <div class="foot-links">
+      <a href="#problem">Why it exists</a>
+      <a href="#mechanism">How it works</a>
+      <a href="#coverage">Coverage</a>
+      <a href="waitlist.html">Join waitlist</a>
+    </div>
+    <div class="foot-note">© 2026 Placedon &nbsp;·&nbsp; Not legal advice.</div>
+  </div>
+</footer>
 
-    hamburgerBtn.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
-      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+<script>
+  const btn  = document.getElementById('hamburgerBtn');
+  const menu = document.getElementById('mobileMenu');
+
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
     });
-
-    mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        hamburgerBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-  </script>
+  });
+</script>
 </body>
 </html>

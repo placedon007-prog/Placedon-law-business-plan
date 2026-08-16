@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Join the waitlist — Placedon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("fonts/PlayfairDisplay-Variable.ttf") format("truetype");
+    font-weight: 400 900;
+    font-style: normal;
+  }
+
+  :root {
+    --ink:       #0A0A0A;
+    --parchment: #F5F3EF;
+    --slate:     #475569;
+    --ink-40:    #B5B5B5;
+    --ink-20:    #D4D2CE;
+    --ink-10:    #E8E6E2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; min-height: 100%; }
+
+  body {
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--ink);
+    color: var(--parchment);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────── */
+  nav {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 0 48px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--parchment);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .back-link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    text-decoration: none;
+    transition: color 120ms;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.6); }
+
+  /* ─── MAIN ────────────────────────────────────────────── */
+  main {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 96px 48px 120px;
+  }
+
+  .page-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .page-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--parchment);
+    margin-bottom: 20px;
+  }
+
+  .intro {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,243,239,0.5);
+    margin-bottom: 64px;
+    max-width: 440px;
+  }
+
+  /* ─── FORM ────────────────────────────────────────────── */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .field {
+    margin-bottom: 40px;
+  }
+
+  .field label {
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 10px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding: 10px 0;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 300;
+    color: var(--parchment);
+    outline: none;
+    transition: border-color 150ms ease;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-bottom-color: rgba(255,255,255,0.5);
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: rgba(255,255,255,0.18);
+    font-weight: 300;
+  }
+
+  /* select custom arrow */
+  .select-wrap {
+    position: relative;
+  }
+  .select-wrap::after {
+    content: '↓';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    pointer-events: none;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .field select option {
+    background: #1a1a1a;
+    color: var(--parchment);
+  }
+  .field select option[value=""] {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .field textarea {
+    resize: none;
+    height: 80px;
+    line-height: 1.7;
+  }
+
+  .optional-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.15);
+    margin-left: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ─── DIVIDER ─────────────────────────────────────────── */
+  .form-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+    margin: 8px 0 40px;
+  }
+
+  /* ─── SUBMIT ──────────────────────────────────────────── */
+  .submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .submit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--parchment);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 3px;
+    transition: border-color 150ms ease;
+  }
+  .submit-btn:hover { border-color: var(--parchment); }
+  .submit-btn .arr { font-style: normal; font-size: 14px; color: rgba(255,255,255,0.35); }
+
+  .submit-note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.15);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .foot-note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.15);
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 24px; }
+    main { padding: 64px 24px 80px; }
+    h1   { font-size: 34px; }
+    footer { padding: 24px; }
+    .submit-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Placedon</a>
+  <a href="index.html" class="back-link">← Back</a>
+</nav>
+
+<main>
+  <div class="page-eyebrow">Waitlist</div>
+  <h1>Join the waitlist.</h1>
+  <p class="intro">
+    We are speaking to practitioners before we ingest a single provision.
+    Two minutes of your time helps us build something worth yours.
+  </p>
+
+  <form action="http://localhost:8765/submit" method="POST">
+    <input type="hidden" name="source" value="landing-page" />
+
+    <div class="field">
+      <label for="name">Full name</label>
+      <input type="text" id="name" name="name" placeholder="Vikram Nair" required autocomplete="name" />
+    </div>
+
+    <div class="field">
+      <label for="email">Email address</label>
+      <input type="email" id="email" name="email" placeholder="vikram@csfirm.in" required autocomplete="email" />
+    </div>
+
+    <div class="field">
+      <label for="company">Company / Firm <span class="optional-tag">optional</span></label>
+      <input type="text" id="company" name="company" placeholder="Nair &amp; Associates, or ACME Pvt Ltd" autocomplete="organization" />
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="field">
+      <label for="role">What do you do?</label>
+      <div class="select-wrap">
+        <select id="role" name="role" required>
+          <option value="" disabled selected>Select your role</option>
+          <option value="Practising Company Secretary">Practising Company Secretary</option>
+          <option value="Chartered Accountant (CA)">Chartered Accountant (CA)</option>
+          <option value="Founder / Director">Founder / Director</option>
+          <option value="Finance or Compliance Professional">Finance or Compliance Professional</option>
+          <option value="Legal Professional">Legal Professional</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="question">
+        What's the one compliance question you spend the most time looking up?
+        <span class="optional-tag">optional</span>
+      </label>
+      <textarea id="question" name="question" placeholder="e.g. Whether we've crossed the CSR threshold, or when the AGM deadline actually falls for a company with a non-March year-end…"></textarea>
+    </div>
+
+    <div class="submit-row">
+      <button type="submit" class="submit-btn">
+        Join waitlist <span class="arr">↗</span>
+      </button>
+      <div class="submit-note">
+        Not legal advice.<br>Not a substitute for a practising CS or CA.
+      </div>
+    </div>
+  </form>
+</main>
+
+<footer>
+  <div class="foot-note">© 2026 Placedon</div>
+  <div class="foot-note">Not legal advice.</div>
+</footer>
+
+</body>
+</html>
