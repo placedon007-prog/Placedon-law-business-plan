@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy — Placedon</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A0A0A'/><text x='50' y='72' font-size='68' font-family='Georgia,serif' font-weight='700' fill='%23F5F3EF' text-anchor='middle'>P</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("fonts/PlayfairDisplay-Variable.ttf") format("truetype");
+    font-weight: 400 900;
+    font-style: normal;
+  }
+
+  :root {
+    --ink:       #0A0A0A;
+    --parchment: #F5F3EF;
+    --slate:     #475569;
+    --ink-80:    #4A4A4A;
+    --ink-40:    #B5B5B5;
+    --ink-20:    #D4D2CE;
+    --ink-10:    #E8E6E2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+
+  body {
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    background: var(--ink);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 0 48px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--parchment);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .back-link {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    text-decoration: none;
+    transition: color 120ms;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.55); }
+
+  main {
+    flex: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 48px 100px;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .updated {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-40);
+    margin-bottom: 56px;
+  }
+
+  .prose { max-width: 620px; }
+
+  .prose h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 48px 0 14px;
+    padding-top: 40px;
+    border-top: 1px solid var(--ink-10);
+  }
+  .prose h2:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+  .prose p {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ink-80);
+    margin-bottom: 16px;
+  }
+
+  .prose ul {
+    margin: 0 0 16px 0;
+    padding: 0;
+    list-style: none;
+  }
+  .prose ul li {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ink-80);
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .prose ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--ink-40);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+  }
+
+  .prose a {
+    color: var(--slate);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  footer {
+    background: var(--parchment);
+    border-top: 1px solid var(--ink-10);
+    padding: 28px 48px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .foot-note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--ink-40);
+  }
+
+  @media (max-width: 600px) {
+    nav    { padding: 0 24px; }
+    main   { padding: 56px 24px 80px; }
+    h1     { font-size: 34px; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Placedon</a>
+  <a href="index.html" class="back-link">← Back</a>
+</nav>
+
+<main>
+  <div class="eyebrow">Privacy policy</div>
+  <h1>What we collect<br>and why.</h1>
+  <div class="updated">Last updated: 17 August 2026</div>
+
+  <div class="prose">
+
+    <h2>Who we are</h2>
+    <p>
+      Placedon is a statutory compliance intelligence tool for Indian private limited
+      companies, currently in early development. We are collecting information from
+      interested practitioners before the product is built. This policy describes
+      what we collect, how we use it, and what we don't do with it.
+    </p>
+
+    <h2>What we collect</h2>
+    <p>We collect only what you give us directly, through two forms:</p>
+    <ul>
+      <li><strong>Waitlist form:</strong> full name, email address, company or firm name (optional), role, and an optional compliance question.</li>
+      <li><strong>Account registration:</strong> full name, email address, password (stored as a salted hash — we never see the plaintext), and role.</li>
+    </ul>
+    <p>
+      We do not use cookies for tracking. We do not use analytics scripts.
+      We do not fingerprint your browser. The session cookie we set after login
+      exists only to keep you signed in and contains no personal data.
+    </p>
+
+    <h2>Why we collect it</h2>
+    <ul>
+      <li>To contact you when early access becomes available.</li>
+      <li>To prioritise which provisions to verify first, based on the compliance questions you share.</li>
+      <li>To understand who our users are — practising CS, CA, founder, or other — so the product is built for the right person.</li>
+    </ul>
+    <p>We will not send you marketing email unrelated to Placedon.</p>
+
+    <h2>How it is stored</h2>
+    <p>
+      During this development phase, data is stored in files on a local server
+      operated by the Placedon team. It is not hosted on a public cloud or
+      shared with third parties. When we move to a hosted environment, this
+      policy will be updated.
+    </p>
+    <p>
+      Passwords are hashed using PBKDF2-HMAC-SHA256 with a random salt and
+      260,000 iterations. The plaintext password is never written to disk.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      You can ask us to delete your data at any time. Send a request to
+      <a href="mailto:saiyamupadhyay200@gmail.com">saiyamupadhyay200@gmail.com</a>
+      with the subject line "Delete my data" and we will remove your record
+      within 7 days and confirm by reply.
+    </p>
+    <p>
+      You can also ask to see what we hold about you. The same email address applies.
+    </p>
+
+    <h2>Disclaimer</h2>
+    <p>
+      Placedon is a research tool, not a law firm. Nothing on this site or in any
+      output from Placedon constitutes legal advice. The tool finds and cites statute —
+      the legal conclusion is yours to draw, with your counsel.
+    </p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-note">© 2026 Placedon</div>
+  <div class="foot-note">Not legal advice.</div>
+</footer>
+
+</body>
+</html>
