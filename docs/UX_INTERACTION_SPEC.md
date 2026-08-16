@@ -243,11 +243,27 @@ infer "answered" from a non-empty string is a client that can misground.
 and should be **replaced** with Ink / Ink-80 / Ink-40 / Ink-10. A design system with 7 undeclared
 values is a suggestion, not a system.
 
-**6.5 DPDP Act 2023 gets the same currency treatment, and needs it more.** The Act received assent
-in August 2023; its Rules followed separately. **A DPDP obligation is exactly the kind that is
-frequently quoted as in force when its commencement is not established.** Screen 2 must show the
-same instrument-and-date trail for DPDP as for the Companies Act — and where commencement is
-unestablished, that is a **PARTIAL**, not an answer.
+**6.5 DPDP Act 2023 gets the same currency treatment. ⚠ UNVERIFIED — see below.**
+
+Screen 2 must show the same instrument-and-date trail for DPDP as for the Companies Act, and where
+commencement is unestablished that is a **PARTIAL**, not an answer. **That part stands** — it follows
+directly from §2.
+
+**What does not stand, and is withdrawn:** this section originally claimed DPDP *"needs it more"*
+than the Companies Act, reasoning that the Act received assent in August 2023 while its Rules
+followed separately. **That was reasoning, not evidence. No Gazette reference for DPDP commencement
+exists anywhere in this repository, and I did not check one before writing it.**
+
+**That is this specification failing its own rule** — §2 says *refuse when a provision cannot be
+dated*, and §6.5 dated nothing. It is the same class of error as the UI spec's ₹50 lakh and the
+₹4 crore I guessed: a plausible figure from plausible reasoning, with no as-at date attached.
+
+It is left visible rather than deleted, because a spec that quietly removes its own mistakes teaches
+nothing.
+
+**Resolution:** `TECHNICAL_PLAN.md` step 6 is a Gazette-only commencement audit and a real gate. If
+DPDP commencement is not establishable, every DPDP answer is PARTIAL permanently and the module
+should not ship — see `TECHNICAL_PLAN.md` §7.2.
 
 **6.6 The distress route stays removed.** DESIGN_SYSTEM.md §7 removed it, and with PoSH out of scope
 that is right. **But the code stays in the backend**: it costs ₹0, calls no model, and deleting

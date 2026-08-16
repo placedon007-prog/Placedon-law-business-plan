@@ -140,17 +140,53 @@ is real query volume to observe.
 
 ## 7. Build order
 
+**Reordered 2026-08-16 — this order previously contradicted BUSINESS_PLAN.md §5.**
+
 | Step | Work | Gate |
 |---|---|---|
-| 1 | `deadlines.py` extension: hour-granularity intervals (DPDP 72hr), tests first | Tests fail before they pass |
-| 2 | `sdf_register.py`, mirroring `register.py`'s provenance discipline | Mutation-tested: no code path yields SDF status without a gazette citation |
-| 3 | `ingest_companies_act.py` Phase 1, six sections, byte-verified | `check_transcription.py` passes |
-| 4 | Wire Companies Act rules into `applicability.py` and `deadlines.py` | GO |
-| 5 | `ingest_companies_act.py` Phase 2 | `bench_retrieval.py` re-run, recall@3 checked |
-| 6 | `ingest_dpdp_act.py`, DPDP core sections | `check_transcription.py` passes |
-| 7 | Wire DPDP rules; `sdf_register.py` lookups; extend `_CONSEQUENCE` for the Schedule | GO |
-| 8 | Ten CS interviews (not code — see BUSINESS_PLAN.md §5) | Determines whether steps 1–7 were worth doing |
+| 1 | `deadlines.py`, **day-granularity only**, tests first | Tests fail before they pass |
+| 2 | `ingest_companies_act.py` Phase 1, six sections, byte-verified, with amendment lineage | `check_transcription.py` passes |
+| 3 | Wire Companies Act rules into `applicability.py` and `deadlines.py` | GO |
+| 4 | `ingest_companies_act.py` Phase 2 | `bench_retrieval.py` re-run, recall@3 checked |
+| **5** | **Ten CS interviews** (not code — BUSINESS_PLAN.md §5) | **Determines whether steps 6–9 are worth doing at all** |
+| 6 | *DPDP gate:* commencement audit — which provisions are in force, from when, Gazette only | If not establishable, **stop and re-decide**. See §7.1 |
+| 7 | `deadlines.py` extension: hour-granularity intervals (DPDP 72hr breach window) | Tests fail before they pass |
+| 8 | `sdf_register.py`, mirroring `register.py`'s provenance discipline | Mutation-tested: no code path yields SDF status without a gazette citation |
+| 9 | `ingest_dpdp_act.py` + wire DPDP rules; extend `_CONSEQUENCE` for the Schedule | GO |
 
-Steps 1–2 precede any corpus work deliberately, same discipline as before: if the
-interval/register designs don't survive their own mutation tests, nothing downstream
-is worth building.
+### 7.1 Why this was reordered
+
+The previous order put **DPDP-specific work at steps 1 and 2** — hour-granularity intervals exist
+solely for DPDP's 72-hour breach window, and `sdf_register.py` is Significant Data Fiduciary status
+under DPDP s.10. Both were scheduled **before any Companies Act section was ingested.**
+
+BUSINESS_PLAN.md §5 says the opposite, and is right: *"Add DPDP module once the Companies Act wedge
+has real usage."* **The build order was starting with the module the business plan defers.**
+
+The reordering also moves the ten interviews from step 8 to **step 5**. At step 8 they validated work
+already done, which is the wrong way round — they now gate the DPDP half. If a practising CS says the
+Companies Act module is not worth paying for, steps 6–9 should not be built.
+
+**Two things kept deliberately.** `deadlines.py` still comes first, because the interval design must
+survive its own mutation test before anything depends on it — that discipline was correct. And
+`sdf_register.py`'s gate is unchanged: no code path may yield SDF status without a gazette citation.
+
+### 7.2 The DPDP gate is a real gate
+
+Step 6 can fail, and failing is a legitimate outcome. **`UX_INTERACTION_SPEC.md` §6.5 asserts DPDP
+"needs currency treatment more" than the Companies Act — that assertion is reasoning, not evidence,
+and no Gazette reference for DPDP commencement exists anywhere in this repo.**
+
+Two outcomes, both actionable:
+
+- **Commencement is establishable** → DPDP is a strong second Act, the currency treatment is a real
+  differentiator precisely because the market is confused, and steps 7–9 proceed.
+- **Commencement is not establishable** → by this product's own rule, every DPDP answer is
+  **PARTIAL, permanently**. Shipping a module that abstains on 100% of its own Act is worse than not
+  shipping it. Re-decide in favour of a **central and stable** second Act — Maternity Benefit or
+  Gratuity — which have less demand and far less risk.
+
+**Also unverified and load-bearing:** BUSINESS_PLAN.md §5 and §7 rest on a *"November 2026
+deadline"* described as *"real and externally verifiable."* It has not been verified in this repo.
+The DPDP urgency argument depends on it, so step 6 must establish it from a primary source or the
+argument goes.
