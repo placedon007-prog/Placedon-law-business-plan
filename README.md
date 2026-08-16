@@ -8,6 +8,7 @@ see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists
 - [Technical Plan](docs/TECHNICAL_PLAN.md) — architecture, the DerivedDate design, the SDF lookup problem, build order
 - [Design System](docs/DESIGN_SYSTEM.md) — colors, typography, components, page-by-page UI spec
 - [UX Interaction Spec](docs/UX_INTERACTION_SPEC.md) — the three answer states, the currency strip, and the rule that governs them: refuse when a provision cannot be *dated*
+- [Interviews](docs/INTERVIEWS.md) — four, incl. the first company-side one; the buyer was named unprompted from the buying side
 - [Harvey Analysis](docs/HARVEY_ANALYSIS.md) — what "Harvey for India" would mean, and why the wedge is the opposite of it
 
 Written 2026-08-16. Every business-plan number is a hypothesis except the one
