@@ -1,8 +1,59 @@
 # Harvey, and what "Harvey for India" would actually mean
 
-Written 2026-08-16. **Harvey's own figures — funding, valuation, pricing, product detail — are with a
-research agent and are NOT stated here until verified.** Everything below is built on findings this
-project has already established with sources, and it does not need Harvey's numbers to hold.
+Written 2026-08-16, **substantially corrected the same day** when research came back.
+
+---
+
+## 0. THE CORRECTION — I had a premise wrong
+
+An earlier version of this project's thinking held that Harvey *"serves boardroom lawyers on desktop
+in English, and cannot reach a litigator on a phone in Nagpur."*
+
+**Harvey is in India, and it is not a distant incumbent.**
+
+| | |
+|---|---|
+| Bengaluru office | announced **10 July 2025** |
+| Indian legal entity | incorporated **8 November 2025** |
+| Indian customers named | **AZB & Partners, Shardul Amarchand Mangaldas, S&A Law Offices, PwC India** |
+| Also named by their CTO | **Flipkart, Reliance group** |
+| Content | **SCC Online partnership, January 2026** |
+| Distribution | **PwC India resells Harvey** |
+| Build | *"three or four different products that we're building out of India right now"* |
+| CEO on record | *"Long-term goal is that every lawyer in India uses our platform."* |
+| Segment | a live **"For Mid-Sized and Small Firms"** page |
+| Funding | **$200M at $11B**, March 2026 (Reuters, CNBC, Bloomberg). Reportedly in talks at $15.5B. |
+
+**They are in your city, with your distribution partner, moving toward your segment, funded at $11
+billion.** Any plan written on the assumption that they are far away is wrong.
+
+**Pricing caveat that must travel with this document:** every "Harvey price" circulating online is
+**unverified and published by competitors**. Harvey has no pricing page. Do not repeat $1,000/seat or
+$50k–$300k contract figures as fact — they are a citation cascade among vendors selling Harvey
+alternatives.
+
+---
+
+## 0a. AND THE FINDING THAT MAKES THE THESIS REAL
+
+Verified directly, by fetching the page:
+
+> **`ca2013.com/section-285-small-company`** — a commercial *"Companies Act Integrated Ready
+> Reckoner"* — displays **"valid as on 14/08/2026"**, and states the small-company limits as
+> **₹2 crore / ₹20 crore.**
+>
+> Those are the **2021** figures. The operative limits are **₹10 crore / ₹100 crore** (G.S.R. 880(E),
+> 1 December 2025). **The page is two amendments and nearly five years stale, while asserting its own
+> currency to the day.**
+
+A second instance: **Razorpay Rize**, a page written for founders, still states ₹4 crore / ₹40 crore
+— the 2022 figures.
+
+**This is the product thesis, found in the wild, with URLs.** And it locates the problem precisely:
+
+> **The staleness is not in the statute. It is in the layer everyone actually reads** — the
+> reckoners, the blogs, the aggregators. Retrieval over that layer inherits the error **silently,
+> with a citation attached**, which is worse than no answer because it looks sourced.
 
 ---
 
@@ -147,6 +198,68 @@ practising CS saying *"yes, I have been burned by a superseded figure"* converts
 saying *"no, I always check"* means the wedge is wrong and the platform thesis dies with it.
 
 ---
+
+## 5a. What actually survives the correction — and it is sharper than what I wrote
+
+The §3 argument stands, but for a **more specific reason than "capital doesn't solve currency."**
+
+### Harvey's quality bar is citation fidelity. It is not currency.
+
+**BigLaw Bench** and the **Legal Agent Benchmark** both grade whether a model sourced and concluded
+correctly **against a fixed corpus**. Neither grades whether the corpus is current. Harvey's own
+framing of quality is *"fully cited."*
+
+**You can cite the correct provision and still state a superseded figure.** That is exactly what
+`ca2013.com` does, and exactly what s.2(85) invites — the Act genuinely still reads *"fifty lakh
+rupees."*
+
+Harvey's Indian statutory feed is **Indian Kanoon** (a free aggregator, not an authoritative
+consolidated-with-amendments corpus) plus **SCC Online**. Better content — **no published
+amendment-application or point-in-time layer.**
+
+**No legal AI vendor, in any jurisdiction, markets statutory currency or point-in-time versioning as
+a feature.** Searched for specifically. NOT FOUND.
+
+**And the asymmetry is structural, not a gap they forgot to fill.** A company scaling to 60+
+jurisdictions and 400+ sources has every incentive to go **wide** and none to go **deep** on Indian
+subordinate-legislation currency. Adding it would mean building legislative-consolidation
+infrastructure — which is a *state* function that most states have not performed.
+
+### The real competitors are not Harvey
+
+**Indian RegTech already does amendment monitoring**, and this must be said plainly:
+
+| | Claim |
+|---|---|
+| **Komrisk / Lexplosion** (est. 2007, 600+ companies) | *"constantly monitoring amendments and updating the compliance repository in real time"* |
+| **Avantis / TeamLease RegTech** | *"we scan 2,233 state, government and local websites"*; 1,100 legal entities |
+| **Ricago** | same category |
+
+**"Nobody tracks amendments" would be false.** The honest gap is narrower:
+
+> They answer **"what must I file, and when"** for an enterprise that already has a compliance
+> function and has been onboarded per-entity. **They do not answer "what is the operative figure in
+> provision X as of today, and which instrument moved it."** And they are unreachable by anyone who
+> does not already know they need them.
+
+### Harvey's exclusion is distribution economics, not capability
+
+Harvey does **not** disclaim compliance or regulatory work — it claims it. It has a small-firms page.
+The durable exclusion is arithmetic:
+
+> **A company that needs a six-month enterprise sale cannot serve a customer whose entire annual
+> software budget is smaller than the cost of the sales cycle.**
+
+Supported by **Clio's 2025 survey**: 72% of solos use AI in some capacity but **only 8% have adopted
+it widely** (vs 35% at large firms), and **the average solo firm spends half the industry estimate on
+software.** Trial is near-universal at the bottom; depth of adoption is 4–8× lower. **That is a
+product-shape finding, not a pricing one.**
+
+### One competitor worth studying rather than dismissing
+
+**Lucio** (Bengaluru) publishes **$149/user/month flat, no seat minimum**, raised **$5M seed in
+October 2025**, and serves 3,000+ lawyers across nine jurisdictions. They proved the mid-market move
+works in India **by publishing a price** — the one weapon Harvey has structurally forfeited.
 
 ## 6. The one line
 
