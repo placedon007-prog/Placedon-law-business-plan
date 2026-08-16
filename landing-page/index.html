@@ -169,7 +169,7 @@
   }
   .nav-links a:hover { color: var(--parchment); }
 
-  .nav-actions { display: flex; align-items: center; }
+  .nav-actions { display: flex; align-items: center; gap: 20px; }
 
   .nav-login {
     color: var(--ink-40);
@@ -612,72 +612,6 @@
     margin-bottom: 20px;
   }
 
-  .access-tracks {
-    margin-top: 64px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    max-width: 780px;
-  }
-
-  .track { }
-
-  .track-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-40);
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--ink-10);
-  }
-
-  .track-desc {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.75;
-    color: var(--ink-80);
-    margin-bottom: 28px;
-  }
-
-  .track-form input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--ink-20);
-    padding: 10px 0;
-    font-size: 14px;
-    font-family: inherit;
-    font-weight: 300;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 150ms ease;
-    margin-bottom: 24px;
-  }
-  .track-form input:focus { border-bottom-color: var(--ink); }
-  .track-form input::placeholder { color: var(--ink-40); font-weight: 300; }
-
-  .track-submit {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: "Playfair Display", serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink-20);
-    padding-bottom: 2px;
-    transition: border-color 150ms ease;
-  }
-  .track-submit:hover { border-color: var(--ink); }
-  .track-submit .arr { font-style: normal; font-size: 12px; color: var(--ink-40); }
-
   .access-note {
     margin-top: 56px;
     font-family: "JetBrains Mono", monospace;
@@ -737,8 +671,7 @@
     .gap-grid    { grid-template-columns: 1fr; }
     .output-grid { grid-template-columns: 1fr; }
     .oos-grid    { grid-template-columns: 1fr; }
-    .access-tracks { grid-template-columns: 1fr; gap: 48px; }
-    .stat-row    { gap: 40px; }
+.stat-row    { gap: 40px; }
     .provision-row { grid-template-columns: 90px 1fr; }
     .p-form      { display: none; }
     .gap-item    { padding-right: 0; }
@@ -765,8 +698,8 @@
       <a href="#coverage">Coverage</a>
     </div>
     <div class="nav-actions">
-      <a href="http://localhost:8765/auth.html?mode=signin" class="nav-login">Log in</a>
-      <a href="http://localhost:8765/auth.html?mode=signup" class="nav-signup">Sign up</a>
+      <a href="auth.html?mode=signin" class="nav-login">Log in</a>
+      <a href="auth.html?mode=signup" class="nav-signup">Sign up</a>
       <a href="waitlist.html" class="nav-cta">Join waitlist</a>
       <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -777,6 +710,8 @@
     <a href="#problem">Why it exists</a>
     <a href="#mechanism">How it works</a>
     <a href="#coverage">Coverage</a>
+    <a href="auth.html?mode=signin">Log in</a>
+    <a href="auth.html?mode=signup">Sign up</a>
     <a href="waitlist.html" class="mob-cta">Join waitlist</a>
   </div>
 </nav>

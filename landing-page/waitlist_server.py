@@ -247,7 +247,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._redirect('/auth.html?mode=signin')
             html = self._read_file('dashboard.html')
             if html is None:
-                return self._respond(404, b'Not found')
+                return self._not_found()
             html = _inject_user(html, user)
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=utf-8')
@@ -272,7 +272,7 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
         else:
-            self._respond(404, b'Not found')
+            self._not_found()
 
     # ── POST ─────────────────────────────────────────────────────────────────
 
@@ -289,7 +289,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == '/login':
             self._handle_login(data)
         else:
-            self._respond(404, b'Not found')
+            self._not_found()
 
     # ── Route handlers ────────────────────────────────────────────────────────
 
@@ -344,9 +344,18 @@ class Handler(BaseHTTPRequestHandler):
 
     def _respond(self, code: int, body: bytes = b''):
         self.send_response(code)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+
+    def _not_found(self):
+        html = self._read_file('404.html') or b'<h1>404 Not found</h1>'
+        self.send_response(404)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.send_header('Content-Length', str(len(html)))
+        self.end_headers()
+        self.wfile.write(html)
 
     def _redirect(self, location: str):
         self.send_response(302)
