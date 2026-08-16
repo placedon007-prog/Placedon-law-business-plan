@@ -1,0 +1,4 @@
+# Local dev-tool state — not project deliverables
+.agents/
+.claude/
+skills-lock.json

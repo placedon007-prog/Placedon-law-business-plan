@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Placedon — Statutory compliance, verified</title>
+<style>
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("fonts/PlayfairDisplay-Variable.ttf") format("truetype");
+    font-weight: 400 900;
+    font-style: normal;
+  }
+
+  :root {
+    --ink: #0A0A0A;
+    --parchment: #F5F3EF;
+    --slate: #475569;
+    --slate-80: #334155;
+    --slate-20: #E2E8F0;
+    --ink-40: #B5B5B5;
+    --ink-10: #E8E6E2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--ink);
+    color: var(--parchment);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* --- Sidebar: off-white, ~15% of width, the one deliberate break from pure black/parchment split --- */
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    border-right: 1px solid var(--ink-10);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .sidebar nav {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sidebar nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 10px 12px;
+    border-left: 3px solid transparent;
+  }
+
+  .sidebar nav a.active {
+    border-left-color: var(--slate);
+    color: var(--slate-80);
+  }
+
+  .sidebar .footnote {
+    font-size: 11px;
+    color: #8A8A8A;
+    line-height: 1.5;
+  }
+
+  /* --- Main: black, ~85% of width, roughly 60% of total visual weight once the parchment
+         citation card and headline whitespace are accounted for --- */
+  main {
+    flex: 1;
+    padding: 96px 80px;
+    max-width: 1100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fills the right-side emptiness without adding a second accent color —
+     a tonal watermark, barely visible against the black field, echoing the
+     citation theme rather than decorating for its own sake. */
+  .section-mark {
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    font-size: 480px;
+    line-height: 1;
+    color: #141414;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  main > * { position: relative; z-index: 1; }
+
+  .proof-row {
+    margin-top: 64px;
+    display: flex;
+    gap: 48px;
+    max-width: 640px;
+  }
+
+  .proof-row .stat {
+    border-top: 1px solid #262626;
+    padding-top: 12px;
+  }
+
+  .proof-row .stat .num {
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+    color: var(--parchment);
+  }
+
+  .proof-row .stat .label {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--ink-40);
+    letter-spacing: 0.02em;
+  }
+
+  .eyebrow {
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--parchment);
+    max-width: 640px;
+  }
+
+  .lede {
+    margin-top: 24px;
+    max-width: 480px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #C9C9C4;
+  }
+
+  .cta-row {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cta {
+    background: var(--slate);
+    color: var(--parchment);
+    border: none;
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    padding: 13px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 150ms ease;
+  }
+
+  .cta:hover { background: var(--slate-80); }
+
+  .cta-secondary {
+    font-size: 13px;
+    color: var(--ink-40);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* --- The one piece of proof: a citation card, off-white, sitting in the black field --- */
+  .citation-card {
+    margin-top: 72px;
+    background: var(--parchment);
+    color: var(--ink);
+    border-radius: 4px;
+    max-width: 460px;
+    padding: 24px;
+    border-left: 4px solid var(--slate);
+  }
+
+  .citation-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #6B6B66;
+    margin-bottom: 10px;
+  }
+
+  .citation-card .quote {
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .citation-card .quote .section {
+    background: var(--ink-10);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  .citation-card .verified {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--slate-80);
+    font-weight: 600;
+  }
+
+  .citation-card .verified .check {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--slate-20);
+    color: var(--slate-80);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 860px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--ink-10); flex-direction: row; align-items: center; padding: 20px 24px; }
+    .sidebar nav { display: none; }
+    main { padding: 56px 24px; }
+    h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div>
+      <div class="logo">Placedon</div>
+      <nav>
+        <a href="#" class="active">Overview</a>
+        <a href="#">Companies Act</a>
+        <a href="#">DPDP Act</a>
+        <a href="#">Pricing</a>
+      </nav>
+    </div>
+    <div class="footnote">Built for practising Company Secretaries and Chartered Accountants.</div>
+  </aside>
+
+  <main>
+    <div class="section-mark">§</div>
+    <div class="eyebrow">Statutory compliance, verified</div>
+    <h1>We don't guess.<br>We cite the section.</h1>
+    <p class="lede">
+      Every answer traces to the exact provision of the Companies Act or the DPDP Act.
+      When we can't verify it, we say so — not the other way around.
+    </p>
+    <div class="cta-row">
+      <button class="cta">Request early access</button>
+      <a href="#" class="cta-secondary">See how it works</a>
+    </div>
+
+    <div class="citation-card">
+      <div class="label">Example answer</div>
+      <div class="quote">
+        Your AGM is due <strong>30 September 2026</strong>.<br>
+        Financial year closed 31 March 2026. <span class="section">s.96(1)</span>
+        requires the meeting within six months of that date.
+      </div>
+      <div class="verified"><span class="check">✓</span> Verified against India Code, 15 Aug 2026</div>
+    </div>
+
+    <div class="proof-row">
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="label">STATUTES COVERED<br>Companies Act · DPDP Act</div>
+      </div>
+      <div class="stat">
+        <div class="num">0%</div>
+        <div class="label">CLAIMS SHIPPED UNVERIFIED<br>Abstains when it can't cite source</div>
+      </div>
+      <div class="stat">
+        <div class="num">72hr</div>
+        <div class="label">DPDP BREACH WINDOW<br>Computed, not guessed</div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>

@@ -21,23 +21,39 @@ pixel should communicate: this system does not guess.
 
 ## 2. Color system
 
+**Revision, 2026-08-16:** the brown accent (formerly "Seal," `#4A2E1B`) is replaced
+with a slate gray across the system. Brown skewed the product toward a leather/legal-office
+cliché; slate gray reads as more contemporary and closer to how Claude.ai's own real
+design language and Harvey's product both lean cooler and more neutral. Every prior
+reference to "Seal" below now means this slate gray.
+
 | Token | Hex | Usage |
 |---|---|---|
 | Ink | `#0A0A0A` | Primary text, headers, borders |
 | Parchment | `#F5F3EF` | Background, cards, surfaces (90% of screen) |
-| Seal | `#4A2E1B` | CTAs, active states, verified badges — 1 element per view max |
+| Slate (formerly Seal) | `#475569` | CTAs, active states, verified badges — 1 element per view max |
 | Ink-80 | `#4A4A4A` | Secondary text, metadata, timestamps |
 | Ink-40 | `#B5B5B5` | Disabled states, placeholders, dividers |
 | Ink-10 | `#E8E6E2` | Hover backgrounds, subtle borders |
-| Seal-80 | `#6B4A35` | Hover states on Seal buttons |
-| Seal-20 | `#E8DDD6` | Light accent backgrounds, verified-by highlight |
+| Slate-80 (formerly Seal-80) | `#334155` | Hover states on Slate buttons |
+| Slate-20 (formerly Seal-20) | `#E2E8F0` | Light accent backgrounds, verified-by highlight |
 | Caution | `#8B4513` | Abstention warnings — never red |
 
 ## 3. Typography
 
+**Revision, 2026-08-16:** Inter is replaced as the Display/H1 typeface. Real Claude.ai
+design guidance explicitly excludes Inter, Roboto, Arial, and Space Grotesk as "overused
+by AI" — Playfair Display (serif, free/open, SIL OFL) takes its place for headings,
+giving the product an editorial, printed-document feel appropriate to a legal product.
+Helvetica Bold is used sparingly and only as a system-font reference (`"Helvetica Neue",
+Helvetica, Arial, sans-serif`), never as a hosted webfont file — Helvetica is a commercial
+Monotype typeface; referencing it as a system font renders the genuine typeface on
+Mac/iOS with no redistribution, and falls back cleanly elsewhere.
+
 | Role | Font | Weights |
 |---|---|---|
-| Display | Inter | 400, 500, 600 |
+| Display / H1 (headings) | Playfair Display | 400, 600, 700 |
+| Body / UI text | System sans (`-apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif`) — Helvetica Bold used subtly, for emphasis only, never body copy | 400, 700 |
 | Monospace | JetBrains Mono | 400, 500 |
 | Hindi | Noto Sans Devanagari | 400, 500 |
 
@@ -64,11 +80,11 @@ to 64px).
 
 ## 5. Core components (condensed — see prior full spec for exact pixel values)
 
-- **Buttons:** Primary (Seal bg), Secondary (outlined), Ghost, Danger (Caution),
-  Verified (Seal-20 bg). 4px radius always — "this is law, not social media."
+- **Buttons:** Primary (Slate bg), Secondary (outlined), Ghost, Danger (Caution),
+  Verified (Slate-20 bg). 4px radius always — "this is law, not social media."
 - **Cards:** White bg, 1px Ink-10 border, never a shadow. Left-border accent variants:
-  Seal-20 (verified answer), Caution (abstention). No Distress variant — see §7.
-- **Badges:** Verified (Seal-20/Seal), Pending (Ink-10/Ink-80), Abstained (Caution-tint),
+  Slate-20 (verified answer), Caution (abstention). No Distress variant — see §7.
+- **Badges:** Verified (Slate-20/Slate), Pending (Ink-10/Ink-80), Abstained (Caution-tint),
   Section citation (Ink-10/Ink, Mono font).
 - **Tables:** Ink header / Parchment text, Mono for dates/sections/amounts, sortable.
 - **Modals:** Fade only, no slide — sliding reads as frivolous for this product.
@@ -107,7 +123,7 @@ with RBAC tiers.
 
 ## 9. Accessibility
 
-WCAG AA minimum (4.5:1 contrast — Seal on Parchment measures 8.5:1). 2px Seal focus
+WCAG AA minimum (4.5:1 contrast — Slate on Parchment measures 8.5:1). 2px Slate focus
 outline on all interactive elements. Full keyboard nav. 44×44px minimum touch targets.
 `prefers-reduced-motion` disables all transitions. Icons always paired with text or
 a label — never color-only status indicators.
