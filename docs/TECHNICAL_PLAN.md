@@ -1,6 +1,7 @@
 # Placedon — Technical Plan
 
-Companion to BUSINESS_PLAN.md. Scope: Companies Act, 2013 + DPDP Act, 2023.
+Companion to BUSINESS_PLAN.md. Scope: **the Companies Act, 2013 — corporate and
+financial law. DPDP is out of scope (decision 2026-08-16, §6.2).**
 Written 2026-08-16.
 
 ## 1. Non-negotiable principles
@@ -18,7 +19,7 @@ validated by measurement, not asserted by preference:
 | Every check is mutation-tested | Break the guard, confirm it fails, restore. A check that doesn't fail when broken is theatre. |
 | Anthropic Claude only, not a multi-provider router | Deliberately rejected Groq/Gemini/DeepSeek/GPT-4o routing. Anthropic's SDK ships `CitationCharLocation` — character-level citation provenance — which no other evaluated provider has, and `max_retries`/backoff is handled natively rather than hand-rolled. |
 
-## 2. The DerivedDate problem (carries forward, applies to both modules)
+## 2. The DerivedDate problem
 
 A due date is a number that does not appear in the statute — it is computed from an
 anchor (a user-supplied fact) and an interval (verbatim text in the provision). A
@@ -42,52 +43,9 @@ the cited provision AND re-running the arithmetic on `(anchor, interval)` reprod
 `result` exactly. The date itself is never sought in the source — it is a claim about
 arithmetic performed on the source, not a claim about the source.
 
-### DPDP-specific application: breach notification
 
-The 72-hour breach notification window (Rules, 2025) is a `DerivedDate` with a twist:
-the anchor is an *event* ("becoming aware of a breach"), not a fixed date like FY close.
-`resolve_anchor()` needs an explicit `awareness_timestamp` fact, and the interval is
-"72 hours," not calendar days — test this arithmetic separately from the Companies Act
-day/month intervals, since hour-granularity intervals are a new case this corpus hasn't
-had before.
 
-## 3. Applicability — the SDF lookup problem (new, DPDP-specific)
-
-`applicability.py`'s existing pattern works by reading a threshold from the corpus and
-comparing it to a `CompanyFacts` field:
-
-```python
-def is_small_company(facts: CompanyFacts) -> Status:
-    threshold = get_threshold("s.2(85)")  # from corpus, never hardcoded
-    if facts.paid_up_capital <= threshold.cap and facts.turnover <= threshold.turnover:
-        return Status.APPLIES
-    return Status.NOT_APPLIES
-```
-
-**This pattern does not extend to Significant Data Fiduciary status under DPDP s.10.**
-SDF designation is not self-computed from volume/turnover — it requires a Central
-Government gazette notification naming the specific Data Fiduciary or class, based on
-non-cumulative risk factors. A company is not an SDF no matter how much data it
-processes until that notification exists.
-
-Required instead: an `sdf_register` module structurally identical to the district
-officer register pattern already proven in the prior build — an external, provenance-tracked
-lookup, not a computed threshold:
-
-```python
-def is_significant_data_fiduciary(facts: CompanyFacts) -> Status:
-    entry = sdf_register.lookup(facts.cin)
-    if entry is None:
-        return Status.NOT_APPLIES  # not NOT_APPLIES-by-default silently — must log why
-    if entry.notified_by_gazette:
-        return Status.APPLIES
-    return Status.ABSTAINS  # e.g. petition pending, not yet notified
-```
-
-Do not write `is_significant_data_fiduciary()` as a threshold function. It will be wrong
-by construction — the statute does not permit self-classification.
-
-## 4. Corpus — ingestion order
+## 3. Corpus — ingestion order
 
 Same shape as the prior `ingest_posh.py`: source is India Code or the Gazette PDF,
 byte-verified, `source_quality` set at ingest (the prior corpus had this unset on all
@@ -99,33 +57,29 @@ s.96, s.92, s.137, s.134, s.173, s.2(85)
 **Phase 2 — Companies Act, remaining core (~15 sections):**
 s.2(62), s.90, s.135, s.139, s.153, s.164, s.203
 
-**Phase 3 — DPDP Act core (~8 sections):**
-s.2 (definitions), s.8, s.9, s.10, s.27, s.33, plus the Schedule and the 72-hour breach
-Rule
 
 Re-run the retrieval benchmark (`bench_retrieval.py`) after each phase. The known risk
 from the prior architecture doc stands: keyword+IDF is measured correct at ~30 sections
-and is expected to degrade somewhere before ~500. Combined Companies Act + DPDP corpus
-lands around 70 sections — inside the safe range for now, but close enough to the first
+and is expected to degrade somewhere before ~500. The Companies Act corpus
+lands around 50 sections — inside the safe range for now, but close enough to the first
 re-measurement checkpoint that it should not be skipped.
 
-## 5. Verifier — extensions needed
+## 4. Verifier — extensions needed
 
 Two narrowing changes, consistent with the existing rule ("narrowing only, never
 loosen the gate to ship a feature"):
 
-1. **DPDP penalty amounts must be matched against the Schedule, not paraphrased.**
-   The Schedule gives fixed rupee ceilings per violation category (₹250cr / ₹200cr /
-   ₹50cr / ₹500cr / ₹10,000). A narration asserting a wrong ceiling for the wrong
-   category is the same class of error `_CONSEQUENCE` already catches for Companies
-   Act penalties — extend that same check to DPDP figures rather than writing a
-   parallel mechanism.
-2. **SDF status claims require the register citation, not the threshold citation.**
-   The verifier must reject any narration that cites s.10 as if it were a computable
-   threshold (e.g., "your data volume exceeds the SDF threshold") — s.10 does not
-   state a self-executing threshold; only a gazette notification does.
+1. **Companies Act penalty amounts must carry the amendment that set them.** s.92(5), s.137(3),
+   s.203(5) and s.134(8) were each restructured by the 2019 or 2020 Amendment Acts, and s.203(5)
+   was *not* touched by the 2020 Act. `_CONSEQUENCE` must reject a narration asserting a penalty
+   figure whose amending instrument is not recorded.
+2. **A prescribed figure requires the prescribing instrument.** Where a section says *"or such
+   higher amount as may be prescribed"*, the operative number is not in the Act. A narration that
+   states such a figure without its G.S.R. citation must be rejected — this is the s.2(85) failure
+   in code form.
 
-## 6. What is deliberately not being built right now
+
+## 5. What is deliberately not being built right now
 
 **The five-agent orchestration control plane** (Senior Programmer / Legal Analyst /
 Document Analyst / Data Scientist / Compliance Auditor agents, 9 MCP tools, 6-model
@@ -138,7 +92,7 @@ internal debug view showing what `ask_engine.py` already does (route taken, cost
 abstention reason), not a multi-agent platform. Revisit the full spec only once there
 is real query volume to observe.
 
-## 7. Build order
+## 6. Build order
 
 **Reordered 2026-08-16 — this order previously contradicted BUSINESS_PLAN.md §5.**
 
@@ -148,45 +102,50 @@ is real query volume to observe.
 | 2 | `ingest_companies_act.py` Phase 1, six sections, byte-verified, with amendment lineage | `check_transcription.py` passes |
 | 3 | Wire Companies Act rules into `applicability.py` and `deadlines.py` | GO |
 | 4 | `ingest_companies_act.py` Phase 2 | `bench_retrieval.py` re-run, recall@3 checked |
-| **5** | **Ten CS interviews** (not code — BUSINESS_PLAN.md §5) | **Determines whether steps 6–9 are worth doing at all** |
-| 6 | *DPDP gate:* commencement audit — which provisions are in force, from when, Gazette only | If not establishable, **stop and re-decide**. See §7.1 |
-| 7 | `deadlines.py` extension: hour-granularity intervals (DPDP 72hr breach window) | Tests fail before they pass |
-| 8 | `sdf_register.py`, mirroring `register.py`'s provenance discipline | Mutation-tested: no code path yields SDF status without a gazette citation |
-| 9 | `ingest_dpdp_act.py` + wire DPDP rules; extend `_CONSEQUENCE` for the Schedule | GO |
+| **5** | **Ten CS interviews** (not code — BUSINESS_PLAN.md §5) | **Determines whether any of steps 1–4 was worth doing** |
 
-### 7.1 Why this was reordered
+### 6.1 Why this was reordered
 
-The previous order put **DPDP-specific work at steps 1 and 2** — hour-granularity intervals exist
-solely for DPDP's 72-hour breach window, and `sdf_register.py` is Significant Data Fiduciary status
-under DPDP s.10. Both were scheduled **before any Companies Act section was ingested.**
+The previous order put **DPDP-specific work at steps 1 and 2** — hour-granularity intervals existed
+solely for DPDP's 72-hour breach window, and `sdf_register.py` was Significant Data Fiduciary status
+under DPDP s.10. Both were scheduled **before any Companies Act section was ingested**, which
+directly contradicted BUSINESS_PLAN.md §5.
 
-BUSINESS_PLAN.md §5 says the opposite, and is right: *"Add DPDP module once the Companies Act wedge
-has real usage."* **The build order was starting with the module the business plan defers.**
+That contradiction is now moot: **DPDP is out of scope entirely** (§6.2), and both items are deleted
+rather than deferred.
 
-The reordering also moves the ten interviews from step 8 to **step 5**. At step 8 they validated work
-already done, which is the wrong way round — they now gate the DPDP half. If a practising CS says the
-Companies Act module is not worth paying for, steps 6–9 should not be built.
+The reordering also moves the ten interviews from step 8 to **step 5** — the last step. They no
+longer validate work already done; they decide whether any of it was worth doing.
 
-**Two things kept deliberately.** `deadlines.py` still comes first, because the interval design must
-survive its own mutation test before anything depends on it — that discipline was correct. And
-`sdf_register.py`'s gate is unchanged: no code path may yield SDF status without a gazette citation.
+**One thing kept deliberately:** `deadlines.py` still comes first, because the interval design must
+survive its own mutation test before anything depends on it.
 
-### 7.2 The DPDP gate is a real gate
+### 6.2 Why DPDP is out of scope
 
-Step 6 can fail, and failing is a legitimate outcome. **`UX_INTERACTION_SPEC.md` §6.5 asserts DPDP
-"needs currency treatment more" than the Companies Act — that assertion is reasoning, not evidence,
-and no Gazette reference for DPDP commencement exists anywhere in this repo.**
+**Decision, 2026-08-16: the product is corporate and financial law — the Companies Act, 2013. Not
+the DPDP Act.** Reasons, in order of weight:
 
-Two outcomes, both actionable:
+1. **Different buyer.** Companies Act → practising Company Secretary. DPDP → Data Protection
+   Officer, IT/security, in-house counsel. Different people, budget and sales motion. **Two buyers
+   pre-revenue is two go-to-market motions pre-revenue**, which this project already rejected once.
+2. **The corpus cost roughly doubles**, from ~₹25–50k to ~₹50–90k. At ₹5,000/month that is 5–10
+   months becoming 10–18.
+3. **No enforcement history to point at.** The Companies Act yields ~1,150 ROC adjudication orders in
+   FY 2024-25 with named sections and rupee amounts. DPDP has effectively none. **A compliance
+   product that cannot say what happens when you get it wrong is a reference tool, not a compliance
+   tool.**
+4. **Verification is harder.** A practising CS knows the Companies Act cold and will sign a reading.
+   Who signs a DPDP reading while the profession is still forming views? `verified_by` means less
+   where there is no settled position to check against.
+5. **Stability.** §1 requires a second Act to be central *and* stable. DPDP is central but **not
+   stable** — its subordinate legislation is still landing. If a second Act is ever added, Maternity
+   Benefit or Gratuity are the safer candidates: both central, both settled, both verifiable by the
+   same buyer.
 
-- **Commencement is establishable** → DPDP is a strong second Act, the currency treatment is a real
-  differentiator precisely because the market is confused, and steps 7–9 proceed.
-- **Commencement is not establishable** → by this product's own rule, every DPDP answer is
-  **PARTIAL, permanently**. Shipping a module that abstains on 100% of its own Act is worse than not
-  shipping it. Re-decide in favour of a **central and stable** second Act — Maternity Benefit or
-  Gratuity — which have less demand and far less risk.
+**What was deleted, not deferred:** the SDF register (`sdf_register.py`), hour-granularity intervals,
+the DPDP Schedule penalty check, and Phase 3 of the corpus.
 
-**Also unverified and load-bearing:** BUSINESS_PLAN.md §5 and §7 rest on a *"November 2026
-deadline"* described as *"real and externally verifiable."* It has not been verified in this repo.
-The DPDP urgency argument depends on it, so step 6 must establish it from a primary source or the
-argument goes.
+**One good idea is kept.** The SDF analysis established that *some statutory statuses are not
+computable from company facts at all* — they require an external register with its own provenance.
+That is a real pattern and the Companies Act has instances of it. It is preserved as a design note,
+not as DPDP code.

@@ -75,18 +75,18 @@ rows. And an undated segment renders **dashed**, never omitted.*
 
 ### 4 — README states the scope boundary
 
-The README says Companies Act + DPDP, PoSH out of scope. It should also say **what this repo does not
-contain** (the engine, the corpus) and where that lives — otherwise a reader assumes the plans are
-the product.
+The README now states the scope correctly (Companies Act only). It should also say **what this repo
+does not contain** — the engine, the corpus, the verification ratchet — and that they live in the
+private backend repo. Otherwise a reader assumes the plans are the product.
 
-### 5 — DPDP commencement audit
+### 5 — ~~Remove the last DPDP fragments~~ · DONE 2026-08-16
 
-`UX_INTERACTION_SPEC.md` §6.5 asserts DPDP needs currency treatment *more*, because its Rules
-followed the Act separately. **That assertion is currently unverified.** Establish, from the Gazette:
-which DPDP provisions are actually in force, and from when.
+DPDP removed from README, BUSINESS_PLAN, TECHNICAL_PLAN, DESIGN_SYSTEM and this file. Remaining
+mentions are the decision record in `TECHNICAL_PLAN.md` §6.2 and the out-of-scope row in
+`BUSINESS_PLAN.md` §2 — both deliberate.
 
-*Bar: Gazette or India Code only. `ca2013.com`, `taxguru.in`, `indiankanoon.org` are blocklisted —
-all three were caught serving superseded statutory text as current.*
+*Standing check: `git grep -in dpdp` must return only those two places plus this line.*
+
 
 ### Not in this loop
 
@@ -108,8 +108,8 @@ research repo are the instruments; the loop cannot make a phone call.
 Stop and report when **any** is true:
 
 1. Items 1–5 done, committed, pushed.
-2. Item 5 finds DPDP commencement is **not** establishable from primary sources — that changes
-   `UX_INTERACTION_SPEC.md` §6.5 and is a decision for a person.
+2. `git grep -in dpdp` returns a match outside `TECHNICAL_PLAN.md` §6.2 and the
+   `BUSINESS_PLAN.md` out-of-scope row.
 3. Three consecutive iterations find nothing actionable.
 4. The ten conversations return — at which point the whole queue is re-ordered around what a real CS
    said.

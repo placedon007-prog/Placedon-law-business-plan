@@ -1,6 +1,7 @@
 # Placedon — UI/UX Design System
 
-Scope: financial law (Companies Act) + digital law (DPDP Act). Written 2026-08-16.
+Scope: corporate and financial law — the Companies Act, 2013. DPDP is out of scope.
+Written 2026-08-16.
 Condensed from the full design spec — kept what's proven-good, flagged what doesn't
 apply to this scope, deferred what's premature. See notes at each section.
 
@@ -95,9 +96,9 @@ to 64px).
 |---|---|---|
 | Dashboard | At-a-glance compliance status across clients | Keep, no changes needed |
 | Ask | The core interaction — question in, verified/abstained answer out | Keep |
-| Corpus Manager | View/verify provisions, coverage %, cost-to-complete | Keep, add DPDP filter alongside Companies Act |
-| Client Manager | Company facts per client (CIN, capital, turnover, FY dates) | Keep, extend `CompanyFacts` fields for DPDP (SDF status, breach contacts) |
-| Deadlines Calendar | Visual timeline, overdue flagging | Keep, extend for DPDP breach-notification countdown (hours, not just dates) |
+| Corpus Manager | View/verify provisions, coverage %, cost-to-complete | Keep |
+| Client Manager | Company facts per client (CIN, capital, turnover, FY dates) | Keep |
+| Deadlines Calendar | Visual timeline, overdue flagging | Keep. Day-granularity only — the hour-granularity case was DPDP-specific and is gone |
 | District/ROC Officer Lookup | MCA Registrar of Companies contact lookup | Keep as-is — already scoped to Companies Act, not PoSH |
 | Settings/Billing | Tier, usage, model cost breakdown | Keep |
 
@@ -106,7 +107,7 @@ to 64px).
 The prior spec included an always-visible "Distress Button" opening a modal with
 National Commission for Women helpline info, scoped to PoSH workplace-harassment
 scenarios. **Removed entirely, not repurposed.** That content has no analog in a
-Companies Act / DPDP product, and shipping a leftover UI pattern with nothing true
+Companies Act product, and shipping a leftover UI pattern with nothing true
 to say would be exactly the kind of "confident but ungrounded" behavior this product
 exists to avoid. If a genuine safety-valve need surfaces for this scope (e.g. a direct
 link to the Data Protection Board's grievance channel), design it fresh, on its own

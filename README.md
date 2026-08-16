@@ -1,7 +1,8 @@
 # Placedon — Law Business Plan
 
-Scope: financial law (Companies Act, 2013) and digital law (DPDP Act, 2023).
-PoSH is out of scope. AI law is excluded until an enacted statute exists.
+Scope: **corporate and financial law — the Companies Act, 2013, and nothing else.**
+PoSH is out of scope. The DPDP Act, 2023 is out of scope (decision 2026-08-16 —
+see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists.
 
 - [Business Plan](docs/BUSINESS_PLAN.md) — buyer, scope, unit economics, go-to-market, risks
 - [Technical Plan](docs/TECHNICAL_PLAN.md) — architecture, the DerivedDate design, the SDF lookup problem, build order
