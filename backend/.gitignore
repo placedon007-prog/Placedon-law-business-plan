@@ -1,0 +1,12 @@
+# Statutory corpus — regenerable, and a public repo of bare Act text is an Act download.
+# See README.md and CLAUDE.md (Copyright Act 1957, s.52(1)(q)(ii)).
+corpus/companies_act/
+corpus/sources/
+corpus/rules/
+corpus/testdocs/
+corpus/provisions/
+corpus/reference/
+
+__pycache__/
+*.pyc
+.pytest_cache/
