@@ -10,6 +10,7 @@ see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists
 - [UX Interaction Spec](docs/UX_INTERACTION_SPEC.md) — the three answer states, the currency strip, and the rule that governs them: refuse when a provision cannot be *dated*
 - [Interviews](docs/INTERVIEWS.md) — four, incl. the first company-side one; the buyer was named unprompted from the buying side
 - [Harvey Analysis](docs/HARVEY_ANALYSIS.md) — what "Harvey for India" would mean, and why the wedge is the opposite of it
+- [Work log 2026-09-05](docs/WORK_LOG_2026_09_05.md) — Bloomberg's four mechanics tested against India (verified against SEBI/SEC primary text), the validation-kit correction, and an autonomous loop that stopped honestly
 
 ## Repository layout
 
