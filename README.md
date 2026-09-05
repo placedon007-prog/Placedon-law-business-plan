@@ -11,6 +11,7 @@ see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists
 - [Interviews](docs/INTERVIEWS.md) — four, incl. the first company-side one; the buyer was named unprompted from the buying side
 - [Harvey Analysis](docs/HARVEY_ANALYSIS.md) — what "Harvey for India" would mean, and why the wedge is the opposite of it
 - [Work log 2026-09-05](docs/WORK_LOG_2026_09_05.md) — Bloomberg's four mechanics tested against India (verified against SEBI/SEC primary text), the validation-kit correction, and an autonomous loop that stopped honestly
+- [Model Development Assessment](docs/MODEL_DEVELOPMENT_ASSESSMENT.md) — why we decline PEFT fine-tuning, vector search and scraping, what we took instead, and the staged plan that puts practitioner validation ahead of the model layer
 
 ## Repository layout
 
