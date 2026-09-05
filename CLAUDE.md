@@ -4,7 +4,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-A planning and prototype repository for **Placedon** — a statutory compliance intelligence engine for Indian private limited companies covering the Companies Act, 2013 and the DPDP Act, 2023. It is not yet a runnable application. There is no build system, no package.json, no test runner, and no CI pipeline.
+The business plan and research record for **Placedon** — an evidence-backed statutory
+compliance intelligence engine for Indian private limited companies.
+
+**Agents: read [AGENTS.md](AGENTS.md) first.** It carries the working rules and applies
+to every agent (Codex included); this file adds Claude-specific notes only.
+
+**Scope is the Companies Act, 2013 — corporate and financial law.** The DPDP Act, 2023 is
+**out of scope** (decision 2026-08-16) and was removed from the plan documents and the
+landing page. Passages further down this file still describe DPDP mechanics (the 72-hour
+breach window, `sdf_register`); they are **retained as a design record of a retired
+direction, not as instructions**. Do not build them.
+
+There IS a test runner and CI: `python3 -m pytest -q` (expect 12 passed, 19 skipped)
+runs the engine's self-tests via the shim in `tests/`, and GitHub Actions runs the same
+on Python 3.9/3.10/3.11 plus a flake8 syntax gate.
+
+**`backend/` here is a partial, stale snapshot** — 145 files against the real 980,
+missing the statute corpus. The engine's source of truth is the separate private
+`placedon-law-backend` repository. Do not edit `backend/` here; the 19 skipped tests are
+that absence, correctly reported, not a defect to fix.
+
+**This repository is PUBLIC.** Anything committed is world-readable and remains in
+history after deletion.
 
 **PoSH is out of scope.** AI law is out of scope until an enacted statute exists to verify against.
 
