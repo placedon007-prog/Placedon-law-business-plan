@@ -52,6 +52,18 @@ def _discover() -> list[str]:
 
 MODULES = _discover()
 
+# The engine uses PEP 604 unions (X | None) at RUNTIME -- in dataclass field types
+# evaluated on class creation -- so `from __future__ import annotations` does not
+# backport them. Python 3.9 cannot run this code at all; it is not a regression to fix
+# but a configuration the project has never supported.
+#
+# The CI matrix still lists 3.9 because it came from GitHub's starter template and
+# editing .github/workflows/ needs an OAuth token with the `workflow` scope. Until the
+# matrix is narrowed to >=3.10, the 3.9 job SKIPS with this reason stated, rather than
+# failing on an interpreter nobody targets or passing as though it had run.
+PY_FLOOR = (3, 10)
+PY_OK = sys.version_info >= PY_FLOOR
+
 # This repository carries a PARTIAL snapshot of the engine: backend/corpus/ holds only
 # `admission` and `benchmark`. The statute corpus (companies_act/_index.json and the
 # rest) lives in the placedon-law-backend repository, which is the source of truth.
@@ -62,6 +74,24 @@ MODULES = _discover()
 # states its reason is honest; a green tick over an absent corpus is not.
 CORPUS_SENTINEL = BACKEND / "corpus" / "companies_act" / "_index.json"
 CORPUS_PRESENT = CORPUS_SENTINEL.exists()
+
+# Signed source PDFs (corpus/testdocs/_raw/) are deliberately NOT published here. The
+# engine's own MANIFEST.md states they are gitignored and the extracted text is what the
+# scanner reads; two of them are ICSI Guidance Notes, which are copyrighted
+# professional-body publications rather than government works. The three GOVERNMENT
+# source PDFs (India Code, Board Powers Rules, G.S.R. 700(E)) ARE published — they are
+# the provenance backbone and are official publications.
+#
+# Four modules verify digital signatures on real signed filings and therefore need those
+# absent PDFs. They are skipped with the reason named, never silently passed.
+RAW_DIR = BACKEND / "corpus" / "testdocs" / "_raw"
+RAW_PRESENT = RAW_DIR.is_dir() and any(RAW_DIR.glob("*.pdf"))
+NEEDS_SIGNED_PDFS = {
+    "checker.pdf_signature",
+    "checker.revocation",
+    "checker.doc_verification",
+    "scripts.verify_document",
+}
 
 
 @contextlib.contextmanager
@@ -92,6 +122,11 @@ def test_discovery_found_the_engine():
 @pytest.mark.parametrize("dotted", MODULES, ids=MODULES)
 def test_module_selftest(dotted: str) -> None:
     """Run one module's `_test()`; surface its own output on failure."""
+    if not PY_OK:
+        pytest.skip(f"engine requires Python >= {PY_FLOOR[0]}.{PY_FLOOR[1]}; this "
+                    f"interpreter is {sys.version_info.major}.{sys.version_info.minor}. "
+                    f"PEP 604 unions are used at runtime, so this code cannot execute "
+                    f"here. Narrow the CI matrix to >=3.10.")
     try:
         mod = importlib.import_module(dotted)
     except Exception as e:                              # noqa: BLE001
@@ -100,6 +135,11 @@ def test_module_selftest(dotted: str) -> None:
     fn = getattr(mod, "_test", None)
     if fn is None:
         pytest.skip(f"{dotted} exposes no _test() at runtime")
+
+    if dotted in NEEDS_SIGNED_PDFS and not RAW_PRESENT:
+        pytest.skip(f"{dotted} verifies signatures on real signed filings; those PDFs "
+                    f"are deliberately unpublished (see MANIFEST.md and .gitignore). "
+                    f"Run it in placedon-law-backend, where they are present.")
 
     buf = io.StringIO()
     try:

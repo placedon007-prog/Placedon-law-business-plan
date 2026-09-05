@@ -1,84 +1,74 @@
-# Placedon backend — the verification engine
+# placedon-law-backend
 
-The part of Placedon that decides **which law may be used, which version applies, what evidence
-supports a result, what was derived from user facts, and when a professional must review it.**
+Verified legal evidence for **Indian corporate law** — the Companies Act 2013.
+Deterministic Python. No language model in any decision path.
 
-No language model is wired in. Every answer this produces today comes from an admitted provision,
-a fact the user supplied, or arithmetic on the two. That is deliberate: the parts that must be
-right do not depend on a model, and the model adapter was built against a stub so that swapping a
-real one in is a single argument rather than a rewrite.
+> The model may propose. The system must verify. The reviewer decides.
 
-```
-35 self-testing suites · red-team 85/85 · full suite ~4s · enforced by a pre-commit hook
-```
+The PoSH Act product this repository began as has been retired; see
+`docs/RETIRED_POSH.md`. What remains is the corporate stack.
 
-## Run it
+## What it does today
 
-```bash
-python3 scripts/preflight.py     # what this checkout needs; a fresh clone needs the corpus rebuilt
-python3 scripts/slice_s96.py     # the Section 96 vertical slice, end to end
-./scripts/run_tests.sh           # every suite
-./scripts/install_hooks.sh       # pre-commit gate (blocks a red commit)
-```
+Given what a company **is** — class, incorporation date, directors, capital,
+turnover — it produces a compliance matrix: one row per obligation the Act
+imposes, each row saying whether the duty attaches, whether it was met, or
+exactly what is missing.
 
-Python 3.12, **no third-party dependencies**. Nothing here needs a package manager.
-
-## What is not in this repository
-
-`corpus/companies_act/`, `corpus/sources/` and `corpus/rules/` are excluded — roughly 7.5 MB of
-bare statutory text and source PDFs.
-
-That is a legal decision, not a size one. Copyright Act 1957, s.52(1)(q)(ii) permits reproducing an
-Act only *together with commentary or other original matter*; a public repository of 527 clean
-statutory sections is an Act download, which `CLAUDE.md` explicitly forbids this project from
-building. Gazette matter is free under (q)(i), but re-hosting the corpus wholesale serves no
-purpose the ingestion script does not.
-
-Regenerate it:
+Rows come from the law, not from documents. A company that has uploaded nothing
+still gets a full matrix, and the rows with no document behind them are the ones
+that matter most.
 
 ```bash
-python3 scripts/ingest_companies_act.py
-python3 scripts/build_section_index.py
-python3 scripts/seed_admission.py
+python3 scripts/serve_matrix.py        # http://127.0.0.1:8014
 ```
 
-`corpus/admission/` (review state and audit trail) and `corpus/benchmark/` (frozen test fixtures,
-which quote short passages as the subject of commentary) **are** included.
+No API key, no network, no dependencies outside the standard library.
 
-## Layers
+## What it refuses to do
 
-| Layer | Module | Does |
-|---|---|---|
-| Provenance | `checker/provenance.py` | Evidence states; nothing reaches VERIFIED without a hashed, reviewed artifact |
-| Admission | `checker/admission.py` | State machine; only reviewed material may be served to a model |
-| Review | `checker/review_queue.py`, `scripts/review.py` | The human gate. Records a decision; never supplies one |
-| Reference | `checker/legal_ref.py` | A provision number is never an identity — the Act's s.56 and a Rule's r.56 are different provisions |
-| Retrieval | `checker/legal_retrieval.py`, `text_search.py`, `retrieve.py` | Exact + keyword; abstains rather than guessing |
-| Evidence | `checker/evidence_pack.py` | The closed world a model may see, and nothing else |
-| Assessment | `checker/assessment.py` | A non-admitted provision can never yield DOES_NOT_APPLY |
-| Generation | `checker/model_adapter.py` | Refuses before the model; fails closed after it |
-| Verification | `checker/claim_verifier.py` | Lexical triage. **Does not establish entailment** — see below |
-| Attribution | `checker/attribution.py` | Which stage failed, and whether that is a defect or a correct refusal |
-| Adversarial | `checker/redteam.py` | 8 frozen attacks, each asserting the layer that must catch it |
-| Legal logic | `checker/agm.py`, `derived_date.py`, `as_of.py`, `amendment.py` | Deterministic; no model involvement |
-| Drafting | `checker/drafting.py`, `provenance_slots.py` | Every value typed by origin; unsupported values block approval |
+- It never claims an obligation was complied with unless every limb of that
+  provision has been decided. Where limbs remain undecided it says so.
+- It never serves a statutory threshold it has not properly acquired. The
+  small-company test currently **refuses**, naming G.S.R. 700(E) as the missing
+  instrument.
+- It never repairs a defective government source. Four transcription defects in
+  the official text are recorded in `docs/SOURCE_DEFECTS.md` and preserved
+  verbatim.
+- It makes no accuracy claim. No practising lawyer has reviewed any output, and
+  there is no real-document benchmark.
 
-`docs/RELIABILITY_CONTRACTS.md` states the behaviours other code may rely on, each with the
-reasoning and the test that enforces it.
+## Layout
 
-## Known limitations, stated rather than buried
+```
+checker/company_profile.py      company facts; unknown is never zero
+checker/classify.py             s.2(85) small-company status, with refusal
+checker/prescribed_thresholds.py  dated thresholds, state derived from evidence
+checker/obligations.py          the obligation register — matrix rows
+checker/matrix_view.py          the HTTP surface, no dependencies
+checker/cascade.py              the E3-E6 deterministic verifier
+checker/metric_policy.py        the release gate
+checker/model_adapter.py        the only place an LLM may be called (stubbed)
+corpus/companies_act/           529 sections, hash-stamped
+corpus/benchmark/               the frozen benchmark and its governance
+docs/                           plans, analyses, source defects, retractions
+research/TASKS.md               the open ledger — what is blocked and on whom
+```
 
-- **No entailment checking.** The lexical verifier tops out at `LEXICAL_CANDIDATE`, and
-  `establishes_support()` is False for it. Against `corpus/benchmark/entailment_v1.json` it agrees
-  with ground truth on **0 of 4** — it grades a true restatement of s.173 and a claim that swaps
-  "thirty days" for "ninety days" identically, because "ninety" appears elsewhere in the section.
-  No threshold fixes that.
-- **The corpus is single-sourced.** Everything rests on one India Code PDF, cross-validated against
-  India Code's own JSON endpoint but never against an independent publisher.
-- **Point-in-time reconstruction is unverified.** `as_of.py` works; nothing external confirms it.
-  No historical claim is made anywhere in the product.
-- **Two source defects are recorded and preserved, not repaired** — see `docs/SOURCE_DEFECTS.md`.
-  s.1 carries a non-statutory editorial tail; four sections carry pre-amendment text and are
-  SUSPENDED.
-- **30 review items are open.** The Board Powers Rules are parsed and unreviewed, so retrieval
-  reports them as withheld rather than serving them.
+## Running
+
+```bash
+./scripts/run_tests.sh                 # every suite, self-testing, not pytest
+python3 scripts/slice_s96.py           # the AGM slice, end to end
+python3 scripts/slice_s173.py          # the board-meeting slice
+python3 scripts/serve_matrix.py        # the compliance matrix
+```
+
+Each module tests itself and prints `[PASS]` / `[FAIL]` and `N/N passed`. There
+is no pytest and no third-party test dependency.
+
+## Status
+
+The verification machinery is substantial and the product is small. Read
+`docs/FAILURE_MODES.md` before believing anything here works, and
+`docs/PLAN_TWO_MONTH.md` for where it goes next.

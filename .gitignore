@@ -20,3 +20,6 @@ corpus/.chunk_dense_cache.pkl
 *.swp
 .idea/
 .vscode/
+
+# Source PDFs: the manifest states these are gitignored; extracted text is what is used
+backend/corpus/testdocs/_raw/

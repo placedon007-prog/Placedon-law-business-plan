@@ -95,3 +95,124 @@ Sampling their character: mostly word fragments from PDF hyphenation and line br
 and statute cross-references the classifier does not recognise. **Six carry long unexplained runs
 and have not been individually inspected** — s.16, s.124 and s.378ZR are the largest. These are
 open, not cleared.
+
+---
+
+## SD-003 — CORRECTED. Mostly not a source defect.
+
+**Filed:** 26 Aug 2026 as "120 unbalanced spans".
+**Corrected:** same day, before any of it was acted on.
+
+The original entry claimed India Code emitted 120 amendment spans with an
+opening `<sup>N</sup>[` and no closing bracket. That was wrong, and the error was
+mine. Classifying the 121 cases by actual cause:
+
+| Cause | n | Whose defect |
+|---|---|---|
+| Bracket present, after a formatting tag | **42** | **ours** — the regex |
+| No bracket at all (mostly omissions) | 69 | neither: correct source behaviour |
+| Opens but never closes | 5 | India Code |
+| Marker absent from content | 5 | India Code |
+
+India Code writes `<sup>2</sup><b>[` and `<sup>2</sup><i>[Explanation.</i>` as
+freely as `<sup>1</sup>[`. Our `_SPAN_OPEN` allowed only whitespace between the
+marker and the bracket, so 42 well-formed spans read as broken markup.
+
+Fixing the pattern to permit short intervening tags recovered **41 spans** and
+moved **38 sections** from PARTIAL to EXACT on both sides of their first
+amendment (45 -> 83).
+
+**The 69 without a bracket are not defects.** 61 of them are omissions. When
+text is omitted the marker points at where it used to be and there is nothing to
+bracket, because the text is gone from the current consolidation entirely. Its
+prior wording cannot come from India Code at any price; it can only come from
+the amending Act.
+
+**What remains a genuine India Code defect: 10 spans.** Five open and never
+close (s.96 among them, blocking reconstruction before 13-6-2018), and five
+name a marker in the footnote that appears nowhere in the content.
+
+**Lesson recorded rather than quietly fixed.** A source-defect claim is an
+accusation against a government publisher, and this one survived a commit, a
+docs entry and a CLAUDE.md status line before anybody classified the failures by
+cause. Counting instances is not diagnosis.
+
+---
+
+## SD-003 (original entry, retained for the record)
+
+## SD-003 — Unbalanced amendment-span markup (120 spans)
+
+**Found:** 26 Aug 2026, while proving the temporal engine.
+**Source:** India Code section content (`SectionPageContent`).
+**Severity:** blocks exact point-in-time reconstruction for the affected spans.
+
+India Code marks amended spans inline as `<sup>N</sup>[ ... ]`. In **120 spans
+across the corpus** the opening bracket has no matching close.
+
+s.96 is one of them. Its content contains exactly one `[` after the marker at
+offset 1823 and **zero** `]` characters thereafter:
+
+    <sup>1</sup>[Provided that annual general meeting of an unlisted company
+    may be held at any place in India if consent is given ...
+
+The section's footnote *does* quote the prior wording
+(`Subs. by Act 1 of 2018, s. 26, for "Provided that"`), so the change is known —
+but the extent of the replaced span is not, so the substitution cannot be
+reversed. `checker/as_of.py` reports PARTIAL and names marker 1.
+
+**Not repaired.** Guessing the span end would mean choosing where the amendment
+stops, which is a legal judgement disguised as a parsing decision. `_find_span`
+already carries a comment recording an earlier attempt to swallow to
+end-of-document: it captured 8,777 characters in s.1323 and destroyed a later
+marker in the same section.
+
+**Consequence.** Across amended sections, reconstruction before the first
+amendment date is:
+
+| | count |
+|---|---|
+| PARTIAL before, EXACT on/after | 118 |
+| EXACT both sides | 45 |
+| PARTIAL both sides | 41 |
+| ABSTAIN | 2 |
+
+Roughly two thirds of amended sections cannot be reconstructed exactly from this
+source alone. The remedy is the amending Act itself — the same independent
+witness used in `docs/CORROBORATION.md` — not a repair to India Code's markup.
+
+## SD-004 — transcription errors in the India Code text of s.174(1) and s.101(1)
+
+Found 2026-08-30 while building qualifier inventories. Two words are wrong in
+the served text. Both are preserved verbatim in the corpus and are **not**
+repaired, per the standing rule on defective government sources.
+
+| section | served text | apparent intent |
+|---|---|---|
+| 174(1) | `...of a company **hall** be one-third of its total strength...` | `shall be` |
+| 101(1) | `...in such manner as **maybe** prescribed...` | `may be` |
+
+Verbatim, as served:
+
+> The quorum for a meeting of the Board of Directors of a company hall be
+> one-third of its total strength
+
+> notice either in writing or through electronic mode in such manner as maybe
+> prescribed
+
+### Why these are recorded rather than fixed
+
+Neither changes the legal effect, and both are plainly typographical. That is
+exactly why they are worth recording: a checker that silently normalises
+`hall` to `shall` has taken an editorial decision about statutory text, and the
+next such decision may not be harmless. The rule is that we never repair a
+defective government source, and a harmless instance is not an exception to it.
+
+### Practical effect
+
+Any exact-phrase match against `shall be one-third` or `may be prescribed` will
+miss these provisions. `entail_qualifier`'s delegated-rule pattern
+(`as may be prescribed`) does **not** match s.101(1) for this reason — the
+qualifier is present in law and invisible to that pattern. Trigger phrases in
+the `QUALIFIERS` inventory quote the served text, typo included, so the
+inventory-verification test passes against the source as it actually is.

@@ -65,6 +65,10 @@ Files changed · Tests added or updated · Commands run · Results · Known limi
 | `checker/legal_ref.py` | Instrument-qualified refs. A provision number is never an identity |
 | `checker/mvp_freeze.py` | Pins the 17 hand-verified MVP mappings against silent drift |
 | `scripts/run_tests.sh` | Runs all 8 suites with PYTHONPATH set — use this, not bare python3 |
+| `scripts/verify_document.py` | Is this PDF real? Cryptographic signature check, CCA India |
+| `scripts/verify_section_index.py` | Our number->id map vs India Code's own API |
+| `checker/robots.py` | Robots + TLS enforcement in the fetch path; fails closed |
+| `checker/corroborate.py` | Prior wording vs the amending Act — the non-circular check |
 | `checker/ss/` | Secretarial Standards defect scanner + evidenced RULES.md |
 | `corpus/companies_act/` | 527 ingested sections, hash-stamped |
 | `corpus/testdocs/` | Real + ICSI-specimen documents for scanner validation |
@@ -79,9 +83,34 @@ Files changed · Tests added or updated · Commands run · Results · Known limi
   `docs/SOURCE_DEFECTS.md`. Corpus status is NOT_FULLY_VERIFIED.
 - Independent-publisher verification: **PENDING**. Both renderings are India Code; a defect in
   their own source is invisible to this check.
-- Section index: 464/474 mapped, 17 MVP sections hand-verified. **PDF-derived, not source-confirmed** —
-  India Code returned 403 on 21 Aug 2026. Re-verify against the section view when reachable.
-- Point-in-time reconstruction: still UNVERIFIED against any external source.
+- Section index: **474/517 entries mapped, 0 live sections unresolved.** The remaining 43 are
+  provisions the legislature omitted (s.11; ss.253-269, omitted by the IBC w.e.f. 15-11-2016),
+  which resolve to None by design. 10 sections our PDF parse left ambiguous — s.51 and nine
+  Producer Company provisions — were resolved from India Code's API and carry
+  `confidence: source-confirmed` (`scripts/resolve_missing_sections.py`).
+- MVP sections verified against India Code's own REST API: 12/12, 0 mismatches
+  (`scripts/verify_section_index.py`). The checker also reports **STALE_TEXT** — holding live
+  text for a provision the source marks omitted, i.e. serving repealed law as current.
+- **India Code moved domain.** `indiacode.nic.in` 403s everything; the live host is
+  **`indiacode.gov.in`**, running DSpace with an open REST API (no key, no auth) exposing
+  `dc.identifier.section_number`, `section_id`, `section_footnote`, `act_name`. The 403 that
+  blocked us since 21 Aug was a dead domain, not a block. Any hardcoded `.nic.in` URL is dead.
+- Point-in-time reconstruction: **boundary behaviour proved** on s.177, s.447 and s.35 —
+  6/6 boundaries, text changes across each, effective dates inclusive
+  (`scripts/prove_temporal.py`, `docs/TEMPORAL_PROOF.md`). EXACT there rests on 5 insertions
+  (recoverable by deletion, no witness needed) and 3 substitutions (single-sourced footnotes).
+- **SD-003 CORRECTED**: 42 of the 121 "unbalanced spans" were our own regex, not a source
+  defect. Fixing it recovered 41 spans; sections EXACT on both sides went 45 -> 83. Genuine
+  India Code defects: 10 spans. s.96 is one and still cannot be reconstructed before 13-6-2018.
+  The 69 bracket-less spans are mostly omissions — correct source behaviour, and reachable
+  only via the amending Act.
+- Section-level reconstruction of **substituted** spans still UNVERIFIED.
+  But prior wording is now independently corroborated for the first time: 24 amended
+  spans matched against the amending Acts themselves on Indian Kanoon, **0 conflicts**;
+  21/24 where the instrument is held. See `docs/CORROBORATION.md`. This corroborates
+  individual spans, not whole sections — the distinction the retracted claims missed.
+- Indian Kanoon does not host The Companies (Amendment) Act, 2019, so claims resting
+  on Act 22 of 2019 have no witness on that source (9 of 16 unresolved cases).
 
 ## Known-invalid results — do not cite
 - Reconstruction "119/119 EXACT vs as-enacted print" — the reference was the CURRENT consolidation.

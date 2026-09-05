@@ -33,13 +33,85 @@ suites=(
   checker/assessment.py
   checker/attribution.py
   checker/agm.py
+  checker/timeline.py
+  checker/robots.py
+  checker/corroborate.py
+  checker/asn1.py
+  checker/pdf_signature.py
+  checker/trust.py
+  checker/entail_mine.py
+  checker/benchmark_freeze.py
+  checker/entail_baseline.py
+  checker/entail_paraphrase.py
+  checker/span_inventory.py
+  checker/commencement.py
+  checker/witness_span.py
+  checker/s96_slice.py
+  checker/eval_taxonomy.py
+  checker/entail_binding.py
+  checker/entail_role.py
+  checker/entail_qualifier.py
+  checker/cascade.py
+  checker/company_profile.py
+  checker/prescribed_thresholds.py
+  checker/classify.py
+  checker/obligations.py
+  checker/obligation_citations.py
+  checker/entity_graph.py
+  checker/corporate_data.py
+  checker/mca_aggregator.py
+  checker/s185.py
+  checker/s188.py
+  checker/s184.py
+  checker/s188_threshold.py
+  checker/s186.py
+  checker/s180.py
+  checker/currency.py
+  checker/chunk_fusion.py
+  checker/fusion.py
+  checker/reranker.py
+  checker/ablation.py
+  checker/dense_index.py
+  checker/ollama_runner.py
+  checker/backtest.py
+  checker/annotation.py
+  checker/extraction_schema.py
+  checker/structural_chunk.py
+  checker/structural_index.py
+  checker/structural_retrieve.py
+  checker/ground_span.py
+  checker/lexical_rank.py
+  checker/retrieval_eval.py
+  checker/chunk_retrieval.py
+  checker/corpus_retrieval.py
+  checker/cross_section_eval.py
+  checker/api.py
+  checker/matrix_view.py
+  checker/diligence_pack.py
+  checker/review_table.py
+  checker/review_record.py
+  checker/resubmission.py
+  checker/promotion_preview.py
+  checker/scoped_retraction.py
+  checker/metric_policy.py
+  checker/s173_slice.py
+  checker/grounding_policy.py
+  checker/entail_pairs_v2.py
+  checker/reviews.py
+  checker/fixture_rebuild.py
+  checker/benchmark_v2_freeze.py
+  checker/benchmark_versions.py
+  checker/release_record.py
+  checker/paraphrase_negatives.py
+  checker/revocation.py
+  checker/doc_verification.py
   checker/provenance_slots.py
   checker/drafting.py
   checker/matter.py
 )
 
 # --test flag rather than a bare run: this one takes a PDF argument in normal use.
-extra=("scripts/acquire_rules.py --test" "scripts/parse_board_rules.py --test" "scripts/baseline_eval.py --test" "scripts/review.py --test" "scripts/review_brief.py --check" "scripts/slice_s96.py --test")
+extra=("scripts/acquire_rules.py --test" "scripts/register_gsr700e.py --test" "scripts/register_s188_rule15.py --test" "scripts/benchmark_refreeze_request.py --test" "scripts/parse_board_rules.py --test" "scripts/baseline_eval.py --test" "scripts/review.py --test" "scripts/review_brief.py --check" "scripts/slice_s96.py --test" "scripts/slice_s173.py --test" "scripts/serve_matrix.py --test" "scripts/serve_api.py --test" "scripts/record_interview.py --test" "scripts/verify_document.py --test" "scripts/verify_section_index.py --test" "scripts/resolve_missing_sections.py --test" "scripts/prove_temporal.py --test" "scripts/batch1_omissions.py --test" "scripts/batch1_review.py --test" "scripts/find_commencement.py --test")
 
 fails=0
 for s in "${suites[@]}"; do
