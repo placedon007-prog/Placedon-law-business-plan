@@ -1,5 +1,12 @@
 # Retrieval findings, round 2 — two corrections to round 1
 
+> **⚠️ SUPERSEDED IN PART — see [ABLATION_CORRECTED.md](ABLATION_CORRECTED.md).**
+> The ablation tiers below (V1/V2/V4/V5) were measured with prompts that fed the model an
+> example section number, on 20 cases. A de-anchored re-run over all 70 cases moves V2
+> from 0.00 to 0.24 and V4 from 0.10 to 0.63, and **overturns the headline claim that the
+> model could not select from evidence placed in front of it.** The retrieval numbers in
+> this document (BM25 0.71, dense 0.73, fusion 0.80) are unaffected and stand.
+
 Measured 2026-09-05, after the first ML program run. Both findings correct things the
 first run reported. Published because a result that survives its own re-examination is
 worth more than one that was never re-examined.

@@ -14,6 +14,7 @@ see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists
 - [Model Development Assessment](docs/MODEL_DEVELOPMENT_ASSESSMENT.md) — why we decline PEFT fine-tuning, vector search and scraping, what we took instead, and the staged plan that puts practitioner validation ahead of the model layer
 - [ML Program Results](docs/ML_PROGRAM_RESULTS.md) — measured: RRF fusion 0.80 p@1 adopted; learned reranker and local LLM both measured and declined; the 8B fine-tune cancelled on hardware, not opinion
 - [Retrieval Findings Round 2](docs/RETRIEVAL_FINDINGS_ROUND2.md) — two corrections to round 1: fusion does NOT transfer to within-section retrieval, and the ablation confound was broader than first reported
+- [Ablation, Corrected](docs/ABLATION_CORRECTED.md) — the de-anchored re-run over all 70 cases; overturns the earlier claim that the model could not select from retrieved evidence, and settles what schema constraint actually buys
 
 ## Repository layout
 
