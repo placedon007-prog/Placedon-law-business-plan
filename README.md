@@ -12,6 +12,8 @@ see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists
 - [Harvey Analysis](docs/HARVEY_ANALYSIS.md) — what "Harvey for India" would mean, and why the wedge is the opposite of it
 - [Work log 2026-09-05](docs/WORK_LOG_2026_09_05.md) — Bloomberg's four mechanics tested against India (verified against SEBI/SEC primary text), the validation-kit correction, and an autonomous loop that stopped honestly
 - [Model Development Assessment](docs/MODEL_DEVELOPMENT_ASSESSMENT.md) — why we decline PEFT fine-tuning, vector search and scraping, what we took instead, and the staged plan that puts practitioner validation ahead of the model layer
+- [ML Program Results](docs/ML_PROGRAM_RESULTS.md) — measured: RRF fusion 0.80 p@1 adopted; learned reranker and local LLM both measured and declined; the 8B fine-tune cancelled on hardware, not opinion
+- [Retrieval Findings Round 2](docs/RETRIEVAL_FINDINGS_ROUND2.md) — two corrections to round 1: fusion does NOT transfer to within-section retrieval, and the ablation confound was broader than first reported
 
 ## Repository layout
 
