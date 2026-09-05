@@ -63,6 +63,24 @@ MODULES = _discover()
 CORPUS_SENTINEL = BACKEND / "corpus" / "companies_act" / "_index.json"
 CORPUS_PRESENT = CORPUS_SENTINEL.exists()
 
+# Signed source PDFs (corpus/testdocs/_raw/) are deliberately NOT published here. The
+# engine's own MANIFEST.md states they are gitignored and the extracted text is what the
+# scanner reads; two of them are ICSI Guidance Notes, which are copyrighted
+# professional-body publications rather than government works. The three GOVERNMENT
+# source PDFs (India Code, Board Powers Rules, G.S.R. 700(E)) ARE published — they are
+# the provenance backbone and are official publications.
+#
+# Four modules verify digital signatures on real signed filings and therefore need those
+# absent PDFs. They are skipped with the reason named, never silently passed.
+RAW_DIR = BACKEND / "corpus" / "testdocs" / "_raw"
+RAW_PRESENT = RAW_DIR.is_dir() and any(RAW_DIR.glob("*.pdf"))
+NEEDS_SIGNED_PDFS = {
+    "checker.pdf_signature",
+    "checker.revocation",
+    "checker.doc_verification",
+    "scripts.verify_document",
+}
+
 
 @contextlib.contextmanager
 def _in_backend():
@@ -100,6 +118,11 @@ def test_module_selftest(dotted: str) -> None:
     fn = getattr(mod, "_test", None)
     if fn is None:
         pytest.skip(f"{dotted} exposes no _test() at runtime")
+
+    if dotted in NEEDS_SIGNED_PDFS and not RAW_PRESENT:
+        pytest.skip(f"{dotted} verifies signatures on real signed filings; those PDFs "
+                    f"are deliberately unpublished (see MANIFEST.md and .gitignore). "
+                    f"Run it in placedon-law-backend, where they are present.")
 
     buf = io.StringIO()
     try:
