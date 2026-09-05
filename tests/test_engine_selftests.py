@@ -52,6 +52,18 @@ def _discover() -> list[str]:
 
 MODULES = _discover()
 
+# The engine uses PEP 604 unions (X | None) at RUNTIME -- in dataclass field types
+# evaluated on class creation -- so `from __future__ import annotations` does not
+# backport them. Python 3.9 cannot run this code at all; it is not a regression to fix
+# but a configuration the project has never supported.
+#
+# The CI matrix still lists 3.9 because it came from GitHub's starter template and
+# editing .github/workflows/ needs an OAuth token with the `workflow` scope. Until the
+# matrix is narrowed to >=3.10, the 3.9 job SKIPS with this reason stated, rather than
+# failing on an interpreter nobody targets or passing as though it had run.
+PY_FLOOR = (3, 10)
+PY_OK = sys.version_info >= PY_FLOOR
+
 # This repository carries a PARTIAL snapshot of the engine: backend/corpus/ holds only
 # `admission` and `benchmark`. The statute corpus (companies_act/_index.json and the
 # rest) lives in the placedon-law-backend repository, which is the source of truth.
@@ -110,6 +122,11 @@ def test_discovery_found_the_engine():
 @pytest.mark.parametrize("dotted", MODULES, ids=MODULES)
 def test_module_selftest(dotted: str) -> None:
     """Run one module's `_test()`; surface its own output on failure."""
+    if not PY_OK:
+        pytest.skip(f"engine requires Python >= {PY_FLOOR[0]}.{PY_FLOOR[1]}; this "
+                    f"interpreter is {sys.version_info.major}.{sys.version_info.minor}. "
+                    f"PEP 604 unions are used at runtime, so this code cannot execute "
+                    f"here. Narrow the CI matrix to >=3.10.")
     try:
         mod = importlib.import_module(dotted)
     except Exception as e:                              # noqa: BLE001
