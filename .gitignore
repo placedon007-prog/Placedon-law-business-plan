@@ -9,3 +9,14 @@ landing-page/data/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Embedding / index caches — build artefacts, rebuildable
+*.pkl
+corpus/.dense_cache.pkl
+corpus/.chunk_dense_cache.pkl
+
+# OS / editor noise
+.DS_Store
+*.swp
+.idea/
+.vscode/

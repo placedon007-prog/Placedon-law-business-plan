@@ -21,6 +21,8 @@ see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists
 |---|---|
 | [`docs/`](docs/) | Business plan, technical plan, interviews, design system, Harvey analysis |
 | [`backend/`](backend/) | **The verification engine.** Corpus admission, retrieval, evidence packs, claim validation, the Section 96 slice. 35 test suites, no dependencies |
+
+> **`backend/` is a partial, stale snapshot** — 145 files against the engine's 980, with no statute corpus. The source of truth is the separate private `placedon-law-backend` repository. Do not edit it here; see [AGENTS.md](AGENTS.md).
 | [`landing-page/`](landing-page/) | Marketing site and waitlist |
 
 The backend is where the product thesis is actually implemented. It runs an existing language model
