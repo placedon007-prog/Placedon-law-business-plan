@@ -5,3 +5,7 @@ skills-lock.json
 
 # User data — never commit real signups or password hashes
 landing-page/data/
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
