@@ -269,6 +269,61 @@ Available libraries (already in the codebase): **framer‑motion** (primary), pl
 
 ---
 
+## 6A. The brand at every touchpoint (nothing is off‑brand — not a spinner, not a 404)
+
+Placedon's brand is not the logo and the homepage; it is the feeling that the **same** exacting, evidentiary
+intelligence is present in every moment of contact. A user should be able to land on any single frame — a
+loading state, an error toast, a tooltip, a confirmation email — and know, without seeing the wordmark, that it
+is Placedon. No moment is neutral. Carry the brand — the "witness, not a tool" voice (Part 3), the
+monochrome‑editorial system (Part 5), and the **citation chip** as the signature object — through all of these:
+
+- **First paint & loading.** Skeletons are shaped like the real content — matrix rows, citation chips, a
+  provenance block — not generic grey bars. The wait already feels like the product. Never a full‑page spinner.
+- **Empty states.** An empty screen is an invitation in the witness voice, never a blank: *"No obligations to
+  show yet. Enter the company's facts and Placedon will build the matrix."*
+- **The abstained state — the brand's defining moment.** This is where Placedon differs from every "confident"
+  tool. Make it the most considered screen in the product: calm, competent — *"here is what I can't verify, and
+  exactly what would settle it."* It must never read as an error or a gap.
+- **Errors.** Terse and precise; name the exact problem (surface the API's `detail` — it names the bad field).
+  The interface's voice, not an apology: *"That date is after the read date. A document can't be checked against
+  a law that didn't exist yet."*
+- **404 / not found.** On‑voice: *"This page is not on the record."* Offer the way back.
+- **Action vocabulary, carried end to end.** A control keeps its name through the whole flow: the button that
+  says "Request a pilot" produces a confirmation that says "Requested." One verb per action, everywhere.
+- **The citation chip, everywhere.** Any time a section, figure, instrument, or date appears — hero, matrix,
+  tooltip, PDF, email — it wears the identical monospace treatment, with its effective date and amending
+  instrument one interaction away. This single object is what makes the whole product feel like one thing.
+- **Forms & inputs.** Labels name what the person controls, in plain terms; statutory inputs render in mono;
+  validation speaks inline, in voice, and fails closed.
+- **Plain‑language glosses.** Where a legal term is unavoidable on a layman surface, an inline plain gloss on
+  hover/tap — never a wall of jargon, never dumbed down for practitioners.
+- **Focus, hover, selection, cursor, scrollbars.** Part of the system, not the browser default: a deliberate
+  focus ring, a brand selection colour, considered hover feedback. These micro‑details are how care becomes visible.
+- **Favicon, app icon, tab title.** The mark as favicon; a stable, specific `<title>` (a name, not a category),
+  so Placedon is recognisable in a crowded tab bar.
+- **Share surfaces (meta / OG / social cards).** When a link is pasted anywhere, the preview is branded and
+  correct — monochrome, the wordmark, an honest one‑line description. The brand travels even where the site doesn't.
+- **Transactional email (pilot confirmation, Sentinel alerts).** Same voice, same type discipline, even in
+  plain text. A Sentinel alert is dated and sourced — what changed, which obligation, from what date, with the
+  instrument — never a bare reminder.
+- **Exported documents (the Evidence Pack).** The brand carries into the artifact a CFO hands to diligence
+  counsel: the typography, the provenance block, and the explicit "what could not be verified" list are all
+  present in the PDF/print. The export is a Placedon document, not a screenshot.
+- **App shell vs marketing chrome.** They may look different — a working surface vs a reading surface — but they
+  are unmistakably the same family; moving between them feels continuous, not like two products.
+- **Continuity in motion.** Consistent easing and shared elements across transitions, so the product feels like
+  one connected space (Part 6).
+- **Every string.** All microcopy is design material: on‑voice, grammatically flawless, Indian English, mono on
+  every citation. One sloppy sentence anywhere undoes the credibility everywhere.
+- **Accessibility as brand.** Visible focus, reduced‑motion final states, honest colour‑independent status — a
+  witness that respects the reader is part of the identity, not a compliance checkbox.
+
+**The test:** capture any random frame — mid‑load, an error toast, a disabled button, the abstain state, an
+email — and it should be unmistakably Placedon and never generic. Build **one source of truth** (design tokens +
+a component library + a copy/voice guide) so the brand cannot drift as the product grows.
+
+---
+
 ## 7. Sentinel — the headline USP (present it generally, never the architecture)
 
 **What to say Sentinel is (layman, ~kept to this spirit):**
@@ -434,6 +489,9 @@ logic, signature element, motion rules) so the choices are legible.
   doesn't list; no citation/figure/metric rendered that isn't computed from real backend data.
 - India throughout: ₹ in lakh/crore, dates as `1 December 2025`, Indian English, real Companies Act / MCA
   reference points — no US/UK framing, no tricolour kitsch.
+- The brand holds at **every touchpoint** (Part 6A): pick any random frame — loading, empty, abstain, error,
+  404, a form field, a tooltip, the favicon, a share card, an email, the exported Evidence Pack — and it is
+  unmistakably Placedon, never generic.
 - a11y AA · reduced‑motion respected · responsive to 360px · no horizontal body scroll · 60fps motion.
 
 **How to work:** brainstorm the design system first (palette, type, icon logic, signature, motion) and lock it
