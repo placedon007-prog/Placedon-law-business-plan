@@ -366,6 +366,9 @@ abstain when it can't cite — and to look backward on purpose: what did the law
 
 ## 8. RAG / backend integration architecture (lift this for the backend team)
 
+> **Companion document:** the full standalone integration spec lives at **`RAG-INTEGRATION.md`** in the same
+> `/docs` folder — hand that to the backend team. This Part 8 is the frontend‑facing summary of it.
+
 This is the exact contract. It is **verified against the code.** Build the frontend against a typed client so
 the mock and the real server are interchangeable.
 

@@ -5,6 +5,9 @@ another service) with the Placedon legal engine. **Status:** every endpoint, fie
 is verified against the source in `placedon-law-backend`. Where a memory/doc file disagrees with the code, the
 **code wins** and it is flagged. This is the contract; build to it, and do not invent surface it does not define.
 
+> **Companion document:** the frontend build brief that consumes this contract is **`ASTRA_MASTER_PROMPT.md`**
+> in the same `/docs` folder (its Part 8 is the frontend‑facing summary of this spec).
+
 > **Product identity note.** Some `.claude/memory/` and older `docs/` files still describe an earlier **PoSH /
 > HR‑compliance** product (FastAPI `checker/app.py`, `placedon-hr`, `verified_by IS NULL`). The shipped code has
 > **pivoted to the Companies Act, 2013** (`corpus/companies_act/`). Trust the code.
