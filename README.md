@@ -4,6 +4,7 @@ Scope: **corporate and financial law — the Companies Act, 2013, and nothing el
 PoSH is out of scope. The DPDP Act, 2023 is out of scope (decision 2026-08-16 —
 see TECHNICAL_PLAN.md §7.1). AI law is excluded until an enacted statute exists.
 
+- 📌 [**Updated GitHub Push by Claude**](UPDATED_GITHUB_PUSH_BY_CLAUDE.md) — **the running project-state / catch-up file. Read this first** (for ChatGPT/Claude or any teammate to understand the current state).
 - [Business Plan](docs/BUSINESS_PLAN.md) — buyer, scope, unit economics, go-to-market, risks
 - [Technical Plan](docs/TECHNICAL_PLAN.md) — architecture, the DerivedDate design, the SDF lookup problem, build order
 - [Design System](docs/DESIGN_SYSTEM.md) — colors, typography, components, page-by-page UI spec
