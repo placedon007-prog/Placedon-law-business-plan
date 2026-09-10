@@ -1,0 +1,10 @@
+/* Placedon Brand Colors */
+:root {
+  --placedon-ink-navy: #0B0F1A;       /* primary background */
+  --placedon-deep-navy: #0E1526;      /* background, alt variant */
+  --placedon-brass-gold: #C9A24B;     /* primary accent — use once per composition */
+  --placedon-muted-gold: #9F743B;     /* secondary accent — body text on dark, citations */
+  --placedon-warm-cream: #F4EFE6;     /* primary text on dark backgrounds */
+  --placedon-soft-cream: #D8CFC0;     /* secondary/subheadline text on dark */
+  --placedon-cool-grey: #5B6472;      /* "unknown / abstained" state only — not decorative */
+}
