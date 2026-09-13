@@ -1,0 +1,1221 @@
+/* ============================================================
+   Placedon dashboard — Claude-Legal-style, pure black & white
+   Scoped under .dash so it never touches anything else.
+   60/40: ink ground dominant, cream for type + key surfaces.
+   ============================================================ */
+
+.dash {
+  --ink: #0b0b0c;
+  --ink-2: #141416;
+  --cream: #f4efe6;
+  --paper: #e9e3d8;
+  --line: rgba(244, 239, 230, 0.12);
+  --line-strong: rgba(244, 239, 230, 0.22);
+  --muted: rgba(244, 239, 230, 0.6);
+  --muted-2: rgba(244, 239, 230, 0.42);
+
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-body), sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dash *,
+.dash *::before,
+.dash *::after {
+  box-sizing: border-box;
+}
+
+.dash-container {
+  width: min(1200px, calc(100% - 80px));
+  margin-inline: auto;
+}
+
+/* ---- type ---- */
+.dash h1,
+.dash h2,
+.dash h3 {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-weight: 440;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.dash h1 {
+  font-size: clamp(44px, 6vw, 88px);
+}
+.dash h2 {
+  font-size: clamp(34px, 4.4vw, 60px);
+}
+.dash h3 {
+  font-size: clamp(22px, 2vw, 27px);
+  letter-spacing: -0.02em;
+}
+.dash p {
+  margin: 0;
+  max-width: 60ch;
+}
+.dash .eyebrow {
+  font-family: var(--font-body), sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.dash .lead {
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.55;
+  color: var(--muted);
+}
+.dash .mono {
+  font-family: var(--font-code), monospace;
+  font-size: 0.86em;
+  letter-spacing: -0.01em;
+}
+.dash .dcite {
+  font-family: var(--font-code), monospace;
+  font-size: 0.9em;
+  color: var(--cream);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+/* ---- buttons ---- */
+.dbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    opacity 0.18s ease;
+  white-space: nowrap;
+}
+.dbtn:active {
+  transform: translateY(1px);
+}
+.dbtn-solid {
+  background: var(--cream);
+  color: var(--ink);
+}
+.dbtn-solid:hover {
+  background: #fff;
+}
+.dbtn-ghost {
+  background: var(--ink-2);
+  color: var(--cream);
+  border-color: var(--line-strong);
+}
+.dbtn-ghost:hover {
+  background: #1d1d20;
+  border-color: var(--line-strong);
+}
+.dbtn-link {
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--cream);
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+}
+.dbtn-link .dbtn-arrow {
+  transition: transform 0.18s ease;
+}
+.dbtn-link:hover .dbtn-arrow {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.dnav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--ink) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.dnav-inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 68px;
+}
+.dnav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display), serif;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+}
+.dnav-brand img {
+  display: block;
+}
+.dnav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin-left: 14px;
+}
+.dnav-links a {
+  font-size: 14px;
+  color: var(--muted);
+  transition: color 0.16s ease;
+}
+.dnav-links a:hover {
+  color: var(--cream);
+}
+.dnav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+.dnav-login {
+  font-size: 14px;
+  color: var(--muted);
+}
+.dnav-login:hover {
+  color: var(--cream);
+}
+.dnav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: none;
+}
+.dnav-burger span {
+  width: 18px;
+  height: 1.5px;
+  background: var(--cream);
+}
+
+/* breadcrumb strip */
+.dcrumb {
+  border-bottom: 1px solid var(--line);
+}
+.dcrumb-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.dcrumb-inner .sep {
+  color: var(--muted-2);
+  margin: 0 8px;
+}
+.dcrumb-here {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ============================================================
+   SECTION rhythm
+   ============================================================ */
+.dsection {
+  padding: clamp(72px, 10vw, 132px) 0;
+  border-top: 1px solid var(--line);
+}
+.dsection-flush {
+  border-top: none;
+}
+.dcenter {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dsec-icon {
+  color: var(--cream);
+  margin-bottom: 30px;
+  opacity: 0.92;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.dhero {
+  padding-top: clamp(60px, 8vw, 104px);
+  padding-bottom: 0;
+  text-align: center;
+}
+.dhero .eyebrow {
+  display: block;
+  margin-bottom: 26px;
+}
+.dhero h1 {
+  margin-inline: auto;
+  max-width: 15ch;
+}
+.dhero .lead {
+  margin: 26px auto 0;
+  max-width: 46ch;
+}
+.dhero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 38px;
+}
+
+/* blank image / video placeholders */
+.dblank {
+  position: relative;
+  background: var(--paper);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(11, 11, 12, 0.34);
+  font-family: var(--font-code), monospace;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+}
+.dblank-dark {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  color: var(--muted-2);
+}
+.dblank-tag {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.dblank .play {
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dhero-panel {
+  margin-top: clamp(48px, 6vw, 88px);
+  aspect-ratio: 16 / 8.4;
+  width: 100%;
+}
+
+/* ============================================================
+   STATEMENT (Built for the record)
+   ============================================================ */
+.dstatement {
+  text-align: center;
+}
+.dstatement h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+}
+.dstatement .lead {
+  margin: 28px auto 0;
+  max-width: 54ch;
+}
+
+/* ============================================================
+   FEATURE ROWS  (icon+title | body | optional aside)
+   ============================================================ */
+.dfeatures {
+  display: flex;
+  flex-direction: column;
+}
+.dfeature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 44px 0;
+  border-top: 1px solid var(--line);
+}
+.dfeature-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.dfeature-head {
+  display: flex;
+  gap: 16px;
+}
+.dfeature-head svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--cream);
+}
+.dfeature-title {
+  font-family: var(--font-display), serif;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+.dfeature-body {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.55;
+}
+.dfeature-learn {
+  margin-top: 20px;
+}
+
+/* two-column shell with sticky aside */
+.dfeature-shell {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: start;
+}
+.daside {
+  position: sticky;
+  top: 96px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px;
+  background: var(--ink-2);
+}
+.daside-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.daside-img {
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.daside p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.daside .dbtn-link {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+/* ============================================================
+   INTERACTIVE DEMO (tabs + document + prompt/connectors)
+   ============================================================ */
+.ddemo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto 44px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  width: fit-content;
+  max-width: 100%;
+}
+.ddemo-tab {
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition:
+    color 0.16s ease,
+    background 0.16s ease;
+}
+.ddemo-tab[data-active="true"] {
+  color: var(--ink);
+  background: var(--cream);
+}
+.ddemo-stage {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+.ddoc {
+  background: var(--paper);
+  border-radius: 18px;
+  padding: clamp(20px, 3vw, 40px);
+}
+.ddoc-paper {
+  background: #fbf8f2;
+  border-radius: 10px;
+  padding: clamp(22px, 3vw, 40px);
+  color: #171512;
+  min-height: 380px;
+}
+.ddoc-paper h4 {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+.ddoc-meta {
+  font-style: italic;
+  color: #6a6459;
+  font-size: 14px;
+  margin: 8px 0 26px;
+}
+.ddoc-h {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 22px 0 8px;
+  color: #171512;
+}
+.ddoc-p {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: #3a352d;
+  max-width: none;
+}
+.ddoc-p .dcite {
+  color: #171512;
+  border-color: rgba(0, 0, 0, 0.28);
+}
+.ddoc-note {
+  font-size: 13px;
+  color: #6a6459;
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
+  padding-left: 12px;
+  margin-top: 8px;
+}
+.dcol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dcard {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--ink-2);
+  padding: 18px;
+}
+.dcard-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 10px;
+}
+.dcard-prompt {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--cream);
+}
+.dconn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.dconn:first-of-type {
+  border-top: none;
+}
+.dconn-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--paper);
+  flex: none;
+}
+
+/* ============================================================
+   ECOSYSTEM
+   ============================================================ */
+.deco {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(28px, 4vw, 56px);
+}
+.deco-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.deco-tile {
+  aspect-ratio: 1;
+  border-radius: 16px;
+}
+.deco h2 {
+  font-size: clamp(28px, 3vw, 40px);
+}
+.deco p {
+  color: var(--muted);
+  margin: 16px 0 24px;
+}
+.dstrip {
+  margin-top: 24px;
+  height: clamp(150px, 20vw, 240px);
+  width: 100%;
+}
+
+/* ============================================================
+   TESTIMONIALS (blank placeholder carousel)
+   ============================================================ */
+.dquotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.dquote {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 26px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dquote-logo {
+  height: 26px;
+  width: 96px;
+  border-radius: 6px;
+}
+.dquote-body {
+  flex: 1;
+  border-radius: 10px;
+}
+.dquote-name {
+  height: 14px;
+  width: 60%;
+  border-radius: 4px;
+}
+.dcarousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 44px;
+}
+.dcarousel-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: none;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+.dcarousel-btn:hover {
+  background: var(--ink-2);
+}
+.ddots {
+  display: flex;
+  gap: 8px;
+}
+.ddot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--line-strong);
+}
+.ddot[data-active="true"] {
+  background: var(--cream);
+}
+
+/* ============================================================
+   BUILD (3-col)
+   ============================================================ */
+.dbuild-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 64px;
+  border-top: 1px solid var(--line);
+}
+.dbuild-col {
+  padding: 34px 30px 0;
+  border-left: 1px solid var(--line);
+}
+.dbuild-col:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+.dbuild-col svg {
+  color: var(--cream);
+  margin-bottom: 22px;
+}
+.dbuild-col h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.dbuild-col p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   RESOURCES (blank card grid)
+   ============================================================ */
+.dres-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 60px;
+}
+.dres-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+.dres-card:hover {
+  border-color: var(--line-strong);
+  background: var(--ink-2);
+}
+.dres-title {
+  height: 46px;
+  border-radius: 8px;
+}
+.dres-kind {
+  font-size: 13px;
+  color: var(--muted-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================================
+   CTA band
+   ============================================================ */
+.dband {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(28px, 4vw, 46px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.dband-icon {
+  color: var(--cream);
+  flex: none;
+}
+.dband h3 {
+  font-size: clamp(24px, 2.6vw, 34px);
+  flex: 1;
+}
+.dband .dbtn {
+  flex: none;
+}
+
+/* ============================================================
+   SECONDARY HERO
+   ============================================================ */
+.dhero2 {
+  text-align: center;
+}
+.dhero2 h2 {
+  max-width: 16ch;
+  margin-inline: auto;
+}
+.dhero2 .lead {
+  margin: 24px auto 0;
+  max-width: 46ch;
+}
+.dhero2-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.dfoot {
+  border-top: 1px solid var(--line);
+  padding: clamp(56px, 7vw, 96px) 0 40px;
+}
+.dfoot-top {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 48px;
+}
+.dfoot-ask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 12px 12px 12px 18px;
+  max-width: 320px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.dfoot-ask span {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--cream);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dfoot-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.dfoot-col-label {
+  font-size: 13px;
+  color: var(--muted-2);
+  margin-bottom: 16px;
+}
+.dfoot-col a {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  padding: 5px 0;
+  transition: color 0.16s ease;
+}
+.dfoot-col a:hover {
+  color: var(--cream);
+}
+.dfoot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted-2);
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .dash-container {
+    width: calc(100% - 40px);
+  }
+  .dnav-links,
+  .dnav-login {
+    display: none;
+  }
+  .dnav-burger {
+    display: flex;
+  }
+  .dfeature-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .dfeature-shell {
+    grid-template-columns: 1fr;
+  }
+  .daside {
+    position: static;
+  }
+  .ddemo-stage {
+    grid-template-columns: 1fr;
+  }
+  .deco {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .dquotes-grid,
+  .dbuild-grid,
+  .dres-grid,
+  .dfoot-cols {
+    grid-template-columns: 1fr;
+  }
+  .dbuild-grid {
+    margin-top: 40px;
+  }
+  .dbuild-col {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    padding: 30px 0 0;
+  }
+  .dbuild-col:first-child {
+    border-top: none;
+  }
+  .dband {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .dfoot-top {
+    grid-template-columns: 1fr;
+  }
+  .dfoot-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   ADDITIONS — motion graphics + small differentiators
+   ============================================================ */
+
+/* ledger index eyebrow: 01 · Label (our signature, not Claude) */
+.dindex {
+  font-family: var(--font-code), monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.dindex b {
+  color: var(--cream);
+  font-weight: 500;
+}
+.dindex::after {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* status chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-code), monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 5px;
+  border: 1px solid var(--line-strong);
+  color: var(--cream);
+  white-space: nowrap;
+}
+.chip::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--cream);
+}
+.chip-attaches::before {
+  background: transparent;
+  border: 1px solid var(--cream);
+}
+.chip-missing::before {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--cream) 0 2px,
+    transparent 2px 4px
+  );
+}
+.chip-abstain {
+  color: var(--muted);
+  border-style: dashed;
+}
+.chip-abstain::before {
+  background: transparent;
+  border: 1px dashed var(--muted);
+}
+
+/* hero matrix motion graphic (replaces hero image placeholder) */
+.hm {
+  margin-top: clamp(48px, 6vw, 88px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--ink-2);
+  overflow: hidden;
+}
+.hm-head,
+.hm-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1.1fr 0.9fr;
+  gap: 20px;
+  align-items: center;
+  padding: 16px clamp(18px, 3vw, 32px);
+}
+.hm-head {
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-code), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.hm-row {
+  border-top: 1px solid var(--line);
+}
+.hm-row:first-of-type {
+  border-top: none;
+}
+.hm-duty {
+  font-size: 15px;
+}
+.hm-basis {
+  font-family: var(--font-code), monospace;
+  font-size: 13px;
+  color: var(--muted);
+}
+.hm-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px clamp(18px, 3vw, 32px);
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.hm-foot b {
+  font-family: var(--font-display), serif;
+  font-weight: 440;
+  font-size: 20px;
+  color: var(--cream);
+}
+
+/* aside chips row */
+.daside-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* connector tiles (replaces blank logo tiles) */
+.deco-tile {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+.deco-tile:hover {
+  border-color: var(--line-strong);
+  background: #111113;
+  transform: translateY(-2px);
+}
+.deco-tile svg {
+  color: var(--cream);
+}
+.deco-tile span {
+  font-family: var(--font-code), monospace;
+  font-size: 12.5px;
+  color: var(--cream);
+  line-height: 1.3;
+}
+
+/* statute marquee (replaces animated logo strip) */
+.mq {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--ink-2);
+  padding: 24px 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.mq-row {
+  overflow: hidden;
+}
+.mq-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  will-change: transform;
+}
+.mq-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  font-family: var(--font-code), monospace;
+  font-size: 14px;
+  color: var(--cream);
+  white-space: nowrap;
+}
+.mq-tag i {
+  font-style: normal;
+  font-family: var(--font-body), sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+/* principles band (replaces blank testimonials) */
+.prin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.prin-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 250px;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+.prin-card:hover {
+  border-color: var(--line-strong);
+  background: var(--ink-2);
+}
+.prin-card svg {
+  color: var(--cream);
+}
+.prin-card h3 {
+  font-family: var(--font-display), serif;
+  font-size: 24px;
+}
+.prin-card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.prin-step {
+  font-family: var(--font-code), monospace;
+  font-size: 12px;
+  color: var(--muted-2);
+  margin-top: auto;
+}
+
+/* resources — motif + serif title (replaces blank image bar) */
+.dres-motif {
+  color: var(--cream);
+  margin-bottom: auto;
+}
+.dres-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dres-card .dres-title {
+  height: auto;
+  background: none;
+  border-radius: 0;
+  font-family: var(--font-display), serif;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--cream);
+}
+
+/* hero video */
+.dhero-video {
+  position: relative;
+  margin-top: clamp(48px, 6vw, 88px);
+  aspect-ratio: 16 / 8.4;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+}
+.dhero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dvideo-controls {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 10px;
+}
+.dvideo-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: none;
+  background: color-mix(in srgb, var(--ink) 60%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease;
+}
+.dvideo-btn:hover {
+  background: color-mix(in srgb, var(--ink) 82%, transparent);
+  transform: scale(1.06);
+}
+
+@media (max-width: 900px) {
+  .prin-grid {
+    grid-template-columns: 1fr;
+  }
+  .hm-head,
+  .hm-row {
+    grid-template-columns: 1.4fr 1fr 0.9fr;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+}

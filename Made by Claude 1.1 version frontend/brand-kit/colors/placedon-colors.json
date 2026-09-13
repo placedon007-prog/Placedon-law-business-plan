@@ -1,0 +1,11 @@
+{
+  "palette": [
+    { "name": "Ink Navy", "hex": "#0B0F1A", "role": "primary background" },
+    { "name": "Deep Navy", "hex": "#0E1526", "role": "background, alt variant" },
+    { "name": "Brass Gold", "hex": "#C9A24B", "role": "primary accent — use once per composition" },
+    { "name": "Muted Gold", "hex": "#9F743B", "role": "secondary accent — body text on dark, citations" },
+    { "name": "Warm Cream", "hex": "#F4EFE6", "role": "primary text on dark backgrounds" },
+    { "name": "Soft Cream", "hex": "#D8CFC0", "role": "secondary/subheadline text on dark" },
+    { "name": "Cool Grey", "hex": "#5B6472", "role": "\"unknown / abstained\" state only — not decorative" }
+  ]
+}
